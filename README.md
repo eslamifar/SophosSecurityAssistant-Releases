@@ -7,7 +7,7 @@ Sophos Security Manager is a Windows x64 desktop application for managing suppor
 
 Manager requires Windows Administrator approval at startup. If elevation is unavailable or the UAC request is cancelled, Manager closes without opening. The independent Widget does not require elevation merely to display status.
 
-Current release: **1.3.68**
+Current release: **1.3.69**
 
 Supported firewall baseline: **Sophos Firewall 17.5 or later**
 
@@ -15,7 +15,7 @@ Supported firewall baseline: **Sophos Firewall 17.5 or later**
 
 **[Download the latest self-contained Windows x64 installer](https://github.com/eslamifar/SophosSecurityManager-Releases/releases/latest)**
 
-> **Version 1.3.68 includes a Windows service for threat logs and optional rule automation.** Setup creates and starts `SophosSecurityManagerThreatCollector`, configures it for automatic startup on UDP 514, and adds the required Windows Firewall rule. The service keeps collecting IPS/ATP Syslog events after the desktop application is closed. See [Threat Collector setup](#threat-collector-setup) before using the Threats tab.
+> **Version 1.3.69 includes a Windows service for threat logs and optional rule automation.** Setup creates and starts `SophosSecurityManagerThreatCollector`, configures it for automatic startup on UDP 514, and adds the required Windows Firewall rule. The service keeps collecting IPS/ATP Syslog events after the desktop application is closed. See [Threat Collector setup](#threat-collector-setup) before using the Threats tab.
 
 ## Main workspaces
 
@@ -91,6 +91,7 @@ Supported firewall baseline: **Sophos Firewall 17.5 or later**
 - Use the first Target group entry as an explicit selection prompt; adding selected IPs is blocked until a real Sophos group is selected.
 - Review current timed Rule memberships, upcoming expirations, overdue entries, and recent expiration outcomes in **Expirations**, which reloads shared Rule state every 60 seconds while visible.
 - Double-click an IP in a threat or membership table to view its complete stored attack history and Rule-automation activity.
+- Review All, Critical, Major, and Moderate threats over an exact From/To date-time range. Live mode advances To to the current time on every 5-second auto refresh; changing To manually preserves a fixed historical range.
 - Chart daily Critical, Major, Moderate, and other threat-event trends over an exact From/To date-time range in **Trends**. Live mode advances To to the current time every 30 seconds, while disabling it preserves a fixed historical range; click a day to display its exact severity totals and every attacking IP, then double-click an IP for its full history.
 - View the Windows collector service state and controls in Manage > Config.
 - Verify that Sophos Log settings target this computer, use UDP 514, enable IPS/ATP forwarding, and use a severity threshold suitable for Moderate events.
@@ -171,10 +172,11 @@ Important behavior:
 
 ### Logging
 
-- View the latest application log with automatic refresh.
+- View application logs over an exact From/To date-time range with automatic refresh and optional Live mode.
+- Filter entries by Connection/API, Hosts/Groups, Network, Threats/Rules, Backup/Restore, Updates, Email, or Application category.
 - Refresh manually, copy all displayed text, clear only the view, or open the log folder.
 - Application logs are stored under `%LocalAppData%\SophosSecurityManager\logs`.
-- Logs roll daily and the latest 14 daily files are retained.
+- Logs roll daily; choose a 14, 30, 60, 90, 120, 180, 270, or 365-day retention period under Manage > Config.
 
 ### Desktop widget
 

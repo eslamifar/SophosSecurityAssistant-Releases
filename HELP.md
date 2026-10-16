@@ -1,0 +1,147 @@
+# Sophos Security Manager Help
+
+Version **1.3.70** · Sophos Firewall 17.5 or later · Windows x64
+
+This browser-readable guide is provided with every release so users can review the application before installing it. The GitHub Release also includes the complete searchable Microsoft Compiled HTML Help file, `SophosSecurityManager-Help-v1.3.70.chm`.
+
+## Contents
+
+- [Requirements and installation](#requirements-and-installation)
+- [Home and connection](#home-and-connection)
+- [Hosts](#hosts)
+- [Network](#network)
+- [Threats and automatic Rules](#threats-and-automatic-rules)
+- [Required firewall hardening](#required-firewall-hardening)
+- [Manage](#manage)
+- [Logging](#logging)
+- [Desktop Widget](#desktop-widget)
+- [Updates](#updates)
+- [Troubleshooting](#troubleshooting)
+
+## Requirements and installation
+
+- Windows 10 or Windows 11 x64.
+- Administrator approval is required when Manager starts and for installation or service control.
+- Sophos Firewall 17.5 or later with XML API enabled and the Manager computer's IP allowed.
+- UDP 514 Syslog forwarding is required for Threats. Forward IPS/ATP and Firewall events.
+- Setup installs and starts the `SophosSecurityManagerThreatCollector` Windows service and creates its Windows Firewall rule.
+- Upgrades preserve user settings and stop Manager, Widget, and the collector safely before replacing files.
+
+Download the latest Setup and standalone CHM from the [latest GitHub Release](https://github.com/eslamifar/SophosSecurityManager-Releases/releases/latest).
+
+## Home and connection
+
+Enter the Sophos host/IP address, HTTPS port, XML API username and password, optional SFOS 22 REST API key, group capacity, auto-disconnect choice, and SSL verification preference.
+
+Password and REST API key values are protected with Windows DPAPI for the current Windows user and are not stored as plain text. Existing legacy plain-text settings are migrated automatically.
+
+Manager tests compatibility after connection and enables supported management areas. The optional REST key is used only for the official SFOS 22 REST capability probe; the primary management workflow uses XML API.
+
+## Hosts
+
+### IPs
+
+- Import IPv4 addresses from a TXT file or online source.
+- Select an existing target group before analysis/import.
+- Respect the configured group capacity.
+- Use Dry Run before changing Sophos.
+- Stop safely after the current batch or roll back the last supported batch.
+- The selected target-group list is locked while an import is running.
+
+### Groups
+
+Browse IP groups and memberships, search, export, add groups or IP/network objects, edit host name and address, and remove selected members. Multiple removals use the bulk-capable workflow and can be cancelled between requests. Double-click an IP to edit it; deletion requires confirmation.
+
+MAC and FQDN pages provide equivalent supported object-management workflows.
+
+## Network
+
+View and manage supported interfaces, gateways, and static routes. While connected, interfaces, gateway health, and routes refresh every minute from one network snapshot. The Widget uses the same gateway state.
+
+## Threats and automatic Rules
+
+The collector stores IPS/ATP events continuously even when Manager is closed. Threat tables group events by source IP and support exact From/To filtering, sortable columns, Excel-compatible export, and a Live mode that advances To every five seconds.
+
+Severity tabs are created dynamically. All retains the Severity column; individual severity tabs show Destination IP after Source IP. Double-click an IP to open its combined Timeline of attacks, automatic membership changes, expirations, and enforcement failures.
+
+Rules can match Critical, Major, and Moderate events by attack count and rolling minute/hour/day windows. Automatic Rules:
+
+- run in configured order through the Windows service;
+- preserve existing memberships;
+- promote an IP to its highest matching severity;
+- suppress lower-severity downgrades;
+- allow a stronger same-group Rule to extend, but never shorten, expiration;
+- retain host objects after expiry;
+- record automatic additions in severity CSV archives.
+
+Use **Manage > Config > Set up automatic Rules** to save protected service credentials, configure trusted IP/CIDR exclusions, set the change-rate limit, and optionally catch up stored threats still inside Rule windows.
+
+**Expirations** reloads shared Rule state every 60 seconds. **Trends** supports live or fixed date ranges and lists every attacking IP for a selected day. **Logs** displays Windows-service Rule actions with live or fixed filtering.
+
+## Required firewall hardening
+
+Adding a source IP to a Hacker group does not by itself guarantee that Sophos Business Application rules will reject it.
+
+For every enabled WAN-to-LAN Business Application rule that publishes an internal server or service, add all four groups to **Blocked client networks**:
+
+- `Hacker-Manual`
+- `Hacker-Moderate`
+- `Hacker-Major`
+- `Hacker-Critical`
+
+Keep the top-level WAN-to-LAN drop rule and IPS protection as additional layers. Apply the per-rule setting to every published HTTP, HTTPS, mail, VPN, and other relevant service.
+
+Enable Firewall log forwarding to the collector. Version 1.3.70 audits WAN Business Application rules and warns when required groups are missing. It also inspects allowed Firewall events after an IP has become an active managed membership. A newly allowed connection is recorded as **ENFORCEMENT FAILURE**, included in the IP Timeline and collector report, and can trigger a critical-alert email.
+
+A short interval exists between the first event and completed group membership. Connections established before membership may continue until they close or expire.
+
+## Manage
+
+### Backup / Restore
+
+Request supported Local, FTP, or Email backups and restore supported configuration files. A successful FTP backup can also be copied to the configured local folder and optionally emailed after verification.
+
+### Config
+
+Control the collector service, open Windows Services, configure automatic Rules, select archive folders, and choose application-log retention from 14 through 365 days.
+
+Automatic blocked-IP archives are maintained as `Critical.csv`, `Major.csv`, and `Moderate.csv`. Missing folders or files are recreated. Rows include source/destination IP, block time, blocked-until value, severity, Rule, and target group when available.
+
+### Email
+
+Configure SMTP with None, STARTTLS, or implicit SSL/TLS encryption. Test delivery before saving. Notification choices include Critical attacks, daily summaries, Rule failures, service/backup failures, capacity warnings, gateway changes, enforcement failures through Critical alerts, and verified FTP backup attachments.
+
+## Logging
+
+Logging reads all retained daily application logs over an exact From/To range. Live mode advances To automatically. Filter by Connection/API, Hosts/Groups, Network, Threats/Rules, Backup/Restore, Updates, Email, or Application. Logs record application runtime and Sophos connection duration.
+
+Use Manage > Config to retain 14, 30, 60, 90, 120, 180, 270, or 365 days.
+
+## Desktop Widget
+
+The independent Widget shows Manager connection state, gateway health, the latest backup, and threat/collector status. Its cards open Manager at the related workspace. Closing Manager does not close the Widget or stop the collector service.
+
+## Updates
+
+Manager checks the dedicated release repository:
+
+- once at startup;
+- every 10 minutes while open;
+- manually from About.
+
+Unchanged releases use a lightweight conditional ETag request. Failed background checks back off to 20, 40, and at most 60 minutes, then return to 10 minutes after success. The automatic prompt appears once per discovered version; the title retains the update notice.
+
+Downloaded Setup files are SHA-256 verified. Downloads support progress, pause/resume, and cancellation. The update cache preserves the installed/current target and newest applicable previous version while cleaning older folders.
+
+## Troubleshooting
+
+- **No threats:** confirm the collector is Running, UDP 514 is reachable, and IPS/ATP forwarding uses a threshold that includes Moderate events.
+- **No enforcement verification:** enable Firewall logs for the SSM Syslog destination.
+- **IP remains able to access a published service:** add all Hacker groups to the Business Application rule's Blocked client networks, then review Configuration Audit and Timeline.
+- **Automatic Rules do not run:** repeat automatic Rule setup, verify protected service credentials, confirm the service is running, and inspect Threats > Logs.
+- **Update check fails:** verify Windows date/time, DNS, HTTPS access to GitHub, proxy/VPN, and TLS inspection.
+- **Saved secrets unavailable:** sign in with the Windows account that saved them or enter and save them again.
+- **FTP copy fails:** provide the FTP password during the current Manager session and verify the configured local folder.
+
+For searchable offline documentation, download and open `SophosSecurityManager-Help-v1.3.70.chm` from the Release assets.
+

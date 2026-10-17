@@ -1,8 +1,8 @@
 # Sophos Security Manager Help
 
-Version **1.3.70** · Sophos Firewall 17.5 or later · Windows x64
+Version **1.3.71** · Sophos Firewall 17.5 or later · Windows x64
 
-This browser-readable guide is provided with every release so users can review the application before installing it. The GitHub Release also includes the complete searchable Microsoft Compiled HTML Help file, `SophosSecurityManager-Help-v1.3.70.chm`.
+This browser-readable guide is provided with every release so users can review the application before installing it. The GitHub Release also includes the complete searchable Microsoft Compiled HTML Help file, `SophosSecurityManager-Help-v1.3.71.chm`.
 
 ## Contents
 
@@ -91,7 +91,7 @@ For every enabled WAN-to-LAN Business Application rule that publishes an interna
 
 Keep the top-level WAN-to-LAN drop rule and IPS protection as additional layers. Apply the per-rule setting to every published HTTP, HTTPS, mail, VPN, and other relevant service.
 
-Enable Firewall log forwarding to the collector. Version 1.3.70 audits WAN Business Application rules and warns when required groups are missing. It also inspects allowed Firewall events after an IP has become an active managed membership. A newly allowed connection is recorded as **ENFORCEMENT FAILURE**, included in the IP Timeline and collector report, and can trigger a critical-alert email.
+Enable Firewall log forwarding to the collector. Version 1.3.71 audits WAN Business Application rules and warns when required groups are missing. If no matching rule can be identified, the warning reports returned-rule and classification counts; per-rule rejection reasons and the exact XML field names returned by Sophos are written to Logging > Application logs. It also inspects allowed Firewall events after an IP has become an active managed membership. A newly allowed connection is recorded as **ENFORCEMENT FAILURE**, included in the IP Timeline and collector report, and can trigger a critical-alert email.
 
 A short interval exists between the first event and completed group membership. Connections established before membership may continue until they close or expire.
 
@@ -143,5 +143,5 @@ Downloaded Setup files are SHA-256 verified. Downloads support progress, pause/r
 - **Saved secrets unavailable:** sign in with the Windows account that saved them or enter and save them again.
 - **FTP copy fails:** provide the FTP password during the current Manager session and verify the configured local folder.
 
-For searchable offline documentation, download and open `SophosSecurityManager-Help-v1.3.70.chm` from the Release assets.
+For searchable offline documentation, download and open `SophosSecurityManager-Help-v1.3.71.chm` from the Release assets.
 

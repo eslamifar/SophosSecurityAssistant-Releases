@@ -7,7 +7,7 @@ Sophos Security Manager is a Windows x64 desktop application for managing suppor
 
 Manager requires Windows Administrator approval at startup. If elevation is unavailable or the UAC request is cancelled, Manager closes without opening. The independent Widget does not require elevation merely to display status.
 
-Current release: **1.3.70**
+Current release: **1.3.71**
 
 Supported firewall baseline: **Sophos Firewall 17.5 or later**
 
@@ -17,7 +17,7 @@ Supported firewall baseline: **Sophos Firewall 17.5 or later**
 
 **[Read the complete pre-installation Help](HELP.md)** — the latest Release also includes a versioned CHM for offline download.
 
-> **Version 1.3.70 includes a Windows service for threat logs and optional rule automation.** Setup creates and starts `SophosSecurityManagerThreatCollector`, configures it for automatic startup on UDP 514, and adds the required Windows Firewall rule. The service keeps collecting IPS/ATP Syslog events after the desktop application is closed. See [Threat Collector setup](#threat-collector-setup) before using the Threats tab.
+> **Version 1.3.71 includes a Windows service for threat logs and optional rule automation.** Setup creates and starts `SophosSecurityManagerThreatCollector`, configures it for automatic startup on UDP 514, and adds the required Windows Firewall rule. The service keeps collecting IPS/ATP Syslog events after the desktop application is closed. See [Threat Collector setup](#threat-collector-setup) before using the Threats tab.
 
 ## Main workspaces
 
@@ -126,7 +126,7 @@ Important behavior:
 - Rules is followed by Logs in Threats. Set Order while adding or editing a Rule, or use Move up / Move down; the service evaluates enabled automatic Rules in that order. Logs shows Windows-service Rule activity with date and search filters.
 - Rules act on threat source IPs and Sophos groups only; there are no email-action Rules yet.
 
-> **Required Sophos rule hardening:** Adding a detected IP to a Hacker group does not, by itself, guarantee that Sophos Business Application rules for published servers will reject it. On every WAN-to-LAN Business Application rule that publishes an internal service, add `Hacker-Manual`, `Hacker-Moderate`, `Hacker-Major`, and `Hacker-Critical` to **Blocked client networks**. Keep IPS enabled as an additional layer. Version 1.3.70 audits these rules and continuously inspects forwarded Firewall Allow events; a newly allowed connection from an active blocked IP is recorded as **ENFORCEMENT FAILURE**.
+> **Required Sophos rule hardening:** Adding a detected IP to a Hacker group does not, by itself, guarantee that Sophos Business Application rules for published servers will reject it. On every WAN-to-LAN Business Application rule that publishes an internal service, add `Hacker-Manual`, `Hacker-Moderate`, `Hacker-Major`, and `Hacker-Critical` to **Blocked client networks**. Keep IPS enabled as an additional layer. Version 1.3.71 audits these rules, explains an unrecognized XML response with counts and per-rule diagnostics in the application log, and continuously inspects forwarded Firewall Allow events; a newly allowed connection from an active blocked IP is recorded as **ENFORCEMENT FAILURE**.
 
 ### Manage
 

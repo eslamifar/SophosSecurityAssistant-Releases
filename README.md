@@ -7,7 +7,7 @@ Sophos Security Manager is a Windows x64 desktop application for managing suppor
 
 Manager requires Windows Administrator approval at startup. If elevation is unavailable or the UAC request is cancelled, Manager closes without opening. The independent Widget does not require elevation merely to display status.
 
-Current release: **1.3.72**
+Current release: **1.3.73**
 
 Supported firewall baseline: **Sophos Firewall 17.5 or later**
 
@@ -17,7 +17,7 @@ Supported firewall baseline: **Sophos Firewall 17.5 or later**
 
 **[Read the complete pre-installation Help](HELP.md)** — the latest Release also includes a versioned CHM for offline download.
 
-> **Version 1.3.72 includes a Windows service for threat logs and optional rule automation.** Setup creates and starts `SophosSecurityManagerThreatCollector`, configures it for automatic startup on UDP 514, and adds the required Windows Firewall rule. The service keeps collecting IPS/ATP Syslog events after the desktop application is closed. See [Threat Collector setup](#threat-collector-setup) before using the Threats tab.
+> **Version 1.3.73 includes a Windows service for threat logs and optional rule automation.** Setup creates and starts `SophosSecurityManagerThreatCollector`, configures it for automatic startup on UDP 514, and adds the required Windows Firewall rule. The service keeps collecting IPS/ATP Syslog events after the desktop application is closed. See [Threat Collector setup](#threat-collector-setup) before using the Threats tab.
 
 ## Main workspaces
 
@@ -73,6 +73,8 @@ Supported firewall baseline: **Sophos Firewall 17.5 or later**
 - Fall back to interface configuration when dedicated gateway entities are unavailable, and preserve the last known Widget state when a refresh returns no gateways.
 - Create, edit, and delete API-managed gateways when supported; interface-managed WAN gateways must be edited through their interface.
 - View, create, edit, and delete supported static routes.
+- View Sophos firewall rules with source, destination, service, action, type, and status details; edit or delete supported rules and enable or disable them, with automatic refresh after successful changes.
+- On SFOS 17.5, automatically fall back to the validated WebAdmin rule inventory/detail protocol when the XML API returns only an empty FirewallRule template. WebAdmin-sourced rules remain read-only unless a mutation protocol has been separately validated; newer firmware continues using supported official APIs.
 - Select interfaces, zones, IP families, and prefixes from validated lists.
 - Availability and writable fields depend on the XML API capabilities exposed by the connected Sophos version.
 
@@ -110,8 +112,7 @@ In Sophos Web Admin:
 2. Add or edit a Syslog server whose address is the management computer's Sophos-facing IP.
 3. Set the port to **514** and the severity to **Information** if Moderate events are required.
 4. Enable the Syslog destination for **IPS > Anomaly**, **IPS > Signatures**, and **Advanced threat protection > ATP events**.
-5. Enable **Firewall** logs so post-block enforcement verification can detect newly allowed connections from actively blocked IPs.
-6. Apply the settings. Setup restarts the collector during an upgrade; use Manage > Config if the diagnostic counters do not appear.
+5. Apply the settings. Setup restarts the collector during an upgrade; use Manage > Config if the diagnostic counters do not appear.
 
 Important behavior:
 
@@ -126,7 +127,7 @@ Important behavior:
 - Rules is followed by Logs in Threats. Set Order while adding or editing a Rule, or use Move up / Move down; the service evaluates enabled automatic Rules in that order. Logs shows Windows-service Rule activity with date and search filters.
 - Rules act on threat source IPs and Sophos groups only; there are no email-action Rules yet.
 
-> **Required Sophos rule hardening:** Adding a detected IP to a Hacker group does not, by itself, guarantee that Sophos Business Application rules for published servers will reject it. On every WAN-to-LAN Business Application rule that publishes an internal service, add `Hacker-Manual`, `Hacker-Moderate`, `Hacker-Major`, and `Hacker-Critical` to **Blocked client networks**. Keep IPS enabled as an additional layer. Version 1.3.72 audits both conventional and alternate/legacy FirewallRule XML layouts across SFOS versions, explains an unrecognized response with safe structural diagnostics, and continuously inspects forwarded Firewall Allow events; a newly allowed connection from an active blocked IP is recorded as **ENFORCEMENT FAILURE**.
+> **Required Sophos rule hardening:** Adding a detected IP to a Hacker group does not, by itself, guarantee that Sophos Business Application rules for published servers will reject it. On every WAN-to-LAN Business Application rule that publishes an internal service, add `Hacker-Manual`, `Hacker-Moderate`, `Hacker-Major`, and `Hacker-Critical` to **Blocked client networks**. Keep IPS enabled as an additional layer. The audit supports conventional and alternate/legacy FirewallRule XML layouts. Some SFOS/API combinations return only an empty FirewallRule template instead of the configured rule inventory; the application identifies that as **audit unavailable**, not as proof that a WAN rule is missing or disabled, and asks for Web Admin verification. The top-level WAN-to-LAN drop rule should also be retained, but it is not a substitute for the per-rule blocked-client setting on legacy SFOS releases. There is a short interval between the first detected event and automatic group membership, and connections established before membership may remain active until they close or expire. Enable **Firewall** log forwarding to the collector as well as IPS/ATP logs; post-block verification records an **ENFORCEMENT FAILURE** when Sophos subsequently allows a new connection from an actively blocked IP.
 
 ### Manage
 
@@ -234,10 +235,14 @@ The application deliberately disables operations that the supported Sophos XML A
 
 The integration layer keeps the official XML API, the official SFOS 22 REST API, and internal Web Admin Controller requests separate. Firmware/API discovery selects a `SophosCompatibilityProfile` and capability set for SFOS families through version 22; unknown firmware is handled with safe read-only probes. The internal `mode=55` IP-group rename request is version-scoped to its validated SFOS 17.5 profile. Diagnostic Web Admin request capture stores sanitized metadata only and must never be treated as a public, stable Sophos API contract.
 
-## Release history and source
+## Build
 
-- [Latest release and release notes](https://github.com/eslamifar/SophosSecurityManager-Releases/releases/latest)
-- [Complete changelog](https://github.com/eslamifar/SophosSecurityManager/blob/master/CHANGELOG.md)
-- [Source-project documentation](https://github.com/eslamifar/SophosSecurityManager/blob/master/README.md)
+Requirements: Visual Studio 2026 with the .NET desktop development workload (or .NET 10 SDK 10.0.100 or later) and Inno Setup 6 for the installer.
 
-Developed by **Mohsen Eslamifar**. This is an independent utility and is not affiliated with, endorsed by, or sponsored by Sophos.
+```powershell
+build\Build-Installer.cmd -Version 1.3.73
+```
+
+The self-contained installer and versioned standalone CHM Help are written to `artifacts\setup`. Publish both files as GitHub Release assets. See [CHANGELOG.md](CHANGELOG.md) for version history and [build/README.md](build/README.md) for build details.
+
+Release builds obfuscate all first-party Manager, Widget, API, Core, Infrastructure, Models, and Services assemblies. The release builder also starts both packaged Manager and Widget modes with strict smoke-test error handling before compiling Setup.

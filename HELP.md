@@ -1,8 +1,8 @@
 # Sophos Security Manager Help
 
-Version **1.3.73** · Sophos Firewall 17.5 or later · Windows x64
+Version **1.3.74** · Sophos Firewall 17.5 or later · Windows x64
 
-This browser-readable guide is provided with every release so users can review the application before installing it. The GitHub Release also includes the complete searchable Microsoft Compiled HTML Help file, `SophosSecurityManager-Help-v1.3.73.chm`.
+This browser-readable guide is provided with every release so users can review the application before installing it. The GitHub Release also includes the complete searchable Microsoft Compiled HTML Help file, `SophosSecurityManager-Help-v1.3.74.chm`.
 
 ## Contents
 
@@ -58,7 +58,7 @@ MAC and FQDN pages provide equivalent supported object-management workflows.
 
 View and manage supported interfaces, gateways, static routes, and firewall rules. While connected, interfaces, gateway health, and routes refresh every minute from one network snapshot. The Widget uses the same gateway state.
 
-The Rules page displays rule status, type, zones, networks, services, and action. Named XML records can be inspected and changed when the connected API supports those operations. On SFOS 17.5, Manager automatically uses the validated WebAdmin Controller inventory and detail requests when the XML API returns only an empty FirewallRule template; those fallback records are read-only unless their change operation has been separately validated.
+The Rules page follows the firewall position order and displays both rule groups and individual rules with ID, group, source, destination, service, action, feature, status, and group-count details. Named XML records can be inspected and changed when the connected API supports those operations; group rows never expose rule-only mutations. On SFOS 17.5, Manager automatically uses the validated WebAdmin Controller inventory and detail requests when the XML API returns only an empty FirewallRule template; those fallback records are read-only unless their change operation has been separately validated.
 
 ## Threats and automatic Rules
 
@@ -145,5 +145,5 @@ Downloaded Setup files are SHA-256 verified. Downloads support progress, pause/r
 - **Saved secrets unavailable:** sign in with the Windows account that saved them or enter and save them again.
 - **FTP copy fails:** provide the FTP password during the current Manager session and verify the configured local folder.
 
-For searchable offline documentation, download and open `SophosSecurityManager-Help-v1.3.73.chm` from the Release assets.
+For searchable offline documentation, download and open `SophosSecurityManager-Help-v1.3.74.chm` from the Release assets.
 

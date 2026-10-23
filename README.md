@@ -7,7 +7,7 @@ Sophos Security Manager is a Windows x64 desktop application for managing suppor
 
 Manager requires Windows Administrator approval at startup. If elevation is unavailable or the UAC request is cancelled, Manager closes without opening. The independent Widget does not require elevation merely to display status.
 
-Current release: **1.3.74**
+Current release: **1.3.75**
 
 Supported firewall baseline: **Sophos Firewall 17.5 or later**
 
@@ -17,7 +17,7 @@ Supported firewall baseline: **Sophos Firewall 17.5 or later**
 
 **[Read the complete pre-installation Help](HELP.md)** — the latest Release also includes a versioned CHM for offline download.
 
-> **Version 1.3.74 includes a Windows service for threat logs and optional rule automation.** Setup creates and starts `SophosSecurityManagerThreatCollector`, configures it for automatic startup on UDP 514, and adds the required Windows Firewall rule. The service keeps collecting IPS/ATP Syslog events after the desktop application is closed. See [Threat Collector setup](#threat-collector-setup) before using the Threats tab.
+> **Version 1.3.75 includes a Windows service for threat logs and optional rule automation.** Setup creates and starts `SophosSecurityManagerThreatCollector`, configures it for automatic startup on UDP 514, and adds the required Windows Firewall rule. The service keeps collecting IPS/ATP Syslog events after the desktop application is closed. See [Threat Collector setup](#threat-collector-setup) before using the Threats tab.
 
 ## Main workspaces
 
@@ -74,6 +74,7 @@ Supported firewall baseline: **Sophos Firewall 17.5 or later**
 - Create, edit, and delete API-managed gateways when supported; interface-managed WAN gateways must be edited through their interface.
 - View, create, edit, and delete supported static routes.
 - View Sophos firewall rules and rule groups in their firewall position order with ID, group, source, destination, service, action, feature, status, and group-count details; edit or delete supported rule records and enable or disable them, with automatic refresh after successful changes.
+- **Experimental:** Network > Rules is still being validated across SFOS versions. Review the detected rule type and details carefully before using any available write action.
 - On SFOS 17.5, automatically fall back to the validated WebAdmin rule inventory/detail protocol when the XML API returns only an empty FirewallRule template. WebAdmin-sourced rules remain read-only unless a mutation protocol has been separately validated; newer firmware continues using supported official APIs.
 - Select interfaces, zones, IP families, and prefixes from validated lists.
 - Availability and writable fields depend on the XML API capabilities exposed by the connected Sophos version.
@@ -240,7 +241,7 @@ The integration layer keeps the official XML API, the official SFOS 22 REST API,
 Requirements: Visual Studio 2026 with the .NET desktop development workload (or .NET 10 SDK 10.0.100 or later) and Inno Setup 6 for the installer.
 
 ```powershell
-build\Build-Installer.cmd -Version 1.3.74
+build\Build-Installer.cmd -Version 1.3.75
 ```
 
 The self-contained installer and versioned standalone CHM Help are written to `artifacts\setup`. Publish both files as GitHub Release assets. See [CHANGELOG.md](CHANGELOG.md) for version history and [build/README.md](build/README.md) for build details.

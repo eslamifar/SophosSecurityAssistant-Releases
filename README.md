@@ -1,23 +1,27 @@
-# Sophos Security Manager
+# Sophos Security Assistant
 
-[![Latest release](https://img.shields.io/github/v/release/eslamifar/SophosSecurityManager-Releases?display_name=tag&sort=semver)](https://github.com/eslamifar/SophosSecurityManager-Releases/releases/latest)
-[![Platform](https://img.shields.io/badge/platform-Windows%20x64-0078D6)](https://github.com/eslamifar/SophosSecurityManager-Releases/releases/latest)
-
-Sophos Security Manager is a Windows x64 desktop application for managing supported Sophos Firewall features through the XML API. It combines host/group workflows, network configuration, backup settings, application logging, automatic updates, continuous IPS/ATP Syslog collection, and an optional standalone desktop status widget.
-
-Manager requires Windows Administrator approval at startup. If elevation is unavailable or the UAC request is cancelled, Manager closes without opening. The independent Widget does not require elevation merely to display status.
-
-Current release: **1.3.75**
-
-Supported firewall baseline: **Sophos Firewall 17.5 or later**
+[![Latest release](https://img.shields.io/github/v/release/eslamifar/SophosSecurityAssistant-Releases?display_name=tag&sort=semver)](https://github.com/eslamifar/SophosSecurityAssistant-Releases/releases/latest)
+[![Platform](https://img.shields.io/badge/platform-Windows%20x64-0078D6)](https://github.com/eslamifar/SophosSecurityAssistant-Releases/releases/latest)
 
 ## Download
 
-**[Download the latest self-contained Windows x64 installer](https://github.com/eslamifar/SophosSecurityManager-Releases/releases/latest)**
+**[Download the latest self-contained Windows x64 installer](https://github.com/eslamifar/SophosSecurityAssistant-Releases/releases/latest)**
 
 **[Read the complete pre-installation Help](HELP.md)** — the latest Release also includes a versioned CHM for offline download.
 
-> **Version 1.3.75 includes a Windows service for threat logs and optional rule automation.** Setup creates and starts `SophosSecurityManagerThreatCollector`, configures it for automatic startup on UDP 514, and adds the required Windows Firewall rule. The service keeps collecting IPS/ATP Syslog events after the desktop application is closed. See [Threat Collector setup](#threat-collector-setup) before using the Threats tab.
+Sophos Security Assistant is a Windows x64 desktop application for managing supported Sophos Firewall features through the XML API. It combines host/group workflows, network configuration, backup settings, application logging, automatic updates, continuous IPS/ATP Syslog collection, and an optional standalone desktop status widget.
+
+Source: [github.com/eslamifar/SophosSecurityAssistant](https://github.com/eslamifar/SophosSecurityAssistant) · Releases: [github.com/eslamifar/SophosSecurityAssistant-Releases](https://github.com/eslamifar/SophosSecurityAssistant-Releases)
+
+Manager requires Windows Administrator approval at startup. If elevation is unavailable or the UAC request is cancelled, Manager closes without opening. The independent Widget does not require elevation merely to display status.
+
+Current release: **1.3.76**
+
+> **Sleep peacefully at night with Sophos Security Assistant.**
+
+Supported firewall baseline: **Sophos Firewall 17.5 or later**
+
+> **Version 1.3.76 includes a Windows service for threat logs and optional rule automation.** Setup creates and starts `SophosSecurityAssistantThreatCollector`, configures it for automatic startup on UDP 514, and adds the required Windows Firewall rule. The service keeps collecting IPS/ATP Syslog events after the desktop application is closed. See [Threat Collector setup](#threat-collector-setup) before using the Threats tab.
 
 ## Main workspaces
 
@@ -105,7 +109,7 @@ Supported firewall baseline: **Sophos Firewall 17.5 or later**
 
 #### Threat Collector setup
 
-The installer creates the `SophosSecurityManagerThreatCollector` Windows service, starts it automatically, and adds a Windows Firewall inbound rule for UDP 514. The service continues collecting while the desktop application is closed.
+The installer creates the `SophosSecurityAssistantThreatCollector` Windows service, starts it automatically, and adds a Windows Firewall inbound rule for UDP 514. The service continues collecting while the desktop application is closed.
 
 In Sophos Web Admin:
 
@@ -120,8 +124,8 @@ Important behavior:
 - The Sophos Reports page reads historical data stored on the firewall; the collector only receives events forwarded after Syslog was configured and the service was running.
 - Existing historical report rows cannot be backfilled through Syslog.
 - Firewall, web, antivirus, and other non-IPS/ATP messages may be received but are counted as non-threat logs and are not added to the Threat IP table.
-- Threat data is stored at `%ProgramData%\SophosSecurityManager\Threats\threats.jsonl`.
-- Collector diagnostics are stored in the same Threats directory; limited rejected-message samples are written under `%ProgramData%\SophosSecurityManager\Logs`.
+- Threat data is stored at `%ProgramData%\SophosSecurityAssistant\Threats\threats.jsonl`.
+- Collector diagnostics are stored in the same Threats directory; limited rejected-message samples are written under `%ProgramData%\SophosSecurityAssistant\Logs`.
 
 ### Threat Rules
 
@@ -157,9 +161,9 @@ Important behavior:
 - Auto-refresh Threats Logs every 60 seconds while visible; Live mode advances To to the current time, while disabling it preserves a fixed historical range.
 - Use **Manage > Config > Set up automatic Rules** for a one-time administrator-approved connection test and protected service-credential setup. The form supports an IPv4/CIDR allowlist, per-minute change limit, and optional catch-up evaluation of stored threats within Rule windows.
 - Max changes / minute delays excess queued additions until the next minute; the IP/CIDR allowlist excludes trusted addresses and networks; stored-threat catch-up is a one-time evaluation of events still inside enabled Rule windows.
-- Create, edit, preview, manually apply, and enable automatic shared Rules from the elevated Manager. Both Manager and the Threat Collector use `%ProgramData%\SophosSecurityManager\Rules`.
+- Create, edit, preview, manually apply, and enable automatic shared Rules from the elevated Manager. Both Manager and the Threat Collector use `%ProgramData%\SophosSecurityAssistant\Rules`.
 - Rename a selected IP host group from Hosts > Groups using the Edit button or by double-clicking the group. Members are preserved, and matching Rule targets and tracked timed memberships are migrated to the new name.
-- Service credentials and automation configuration stay protected under `%ProgramData%\SophosSecurityManager\Automation`. Once configured and unpaused, enabled automatic Rules run in the service without Manager elevation or an open Manager window. The Rule checkbox alone does not configure service credentials; use the setup button once. If shared Rules storage is unavailable, Manager falls back to personal manual-only Rules.
+- Service credentials and automation configuration stay protected under `%ProgramData%\SophosSecurityAssistant\Automation`. Once configured and unpaused, enabled automatic Rules run in the service without Manager elevation or an open Manager window. The Rule checkbox alone does not configure service credentials; use the setup button once. If shared Rules storage is unavailable, Manager falls back to personal manual-only Rules.
 - Local Windows users with access to the shared Rules directory can change automatic Rules, which may cause the service to make Sophos changes using its configured credentials. Grant this access only on trusted workstations.
 - Deduplicate queued IP/severity evaluations, avoid changing existing manual memberships, maintain expirations while Manager is closed, and pause automatically after three consecutive failures.
 - Manage > Config shows the collector status, Start/Restart/Stop/Windows Services controls, the automatic-Rule setup button, and configurable folders for automatic-block CSV history and FTP backup copies. Automatic-block CSV rows include source and destination IPs; older rows receive a blank destination during schema migration. If Critical.csv, Major.csv, or Moderate.csv is moved or deleted, the running service recreates the missing file with the correct header within about ten seconds. Manager itself now requires Administrator approval at startup; automatic service execution continues independently after Manager closes.
@@ -182,12 +186,12 @@ Important behavior:
 - View application logs over an exact From/To date-time range with automatic refresh and optional Live mode.
 - Filter entries by Connection/API, Hosts/Groups, Network, Threats/Rules, Backup/Restore, Updates, Email, or Application category.
 - Refresh manually, copy all displayed text, clear only the view, or open the log folder.
-- Application logs are stored under `%LocalAppData%\SophosSecurityManager\logs`.
+- Application logs are stored under `%LocalAppData%\SophosSecurityAssistant\logs`.
 - Logs roll daily; choose a 14, 30, 60, 90, 120, 180, 270, or 365-day retention period under Manage > Config.
 
 ### Desktop widget
 
-- Run as an independent process from the main `SophosSecurityManager.UI.exe --widget` executable; closing Manager does not close the Widget.
+- Run as an independent process from the main `SophosSecurityAssistant.UI.exe --widget` executable; closing Manager does not close the Widget.
 - Show Manager connection heartbeat, gateway health, latest successful in-app backup and its type, and the number of threats received during the current local calendar day in a shorter four-card layout.
 - Integrate Threat Collector health into the Threats card; when the service is stopped, show **Service is not running** in red instead of a threat count.
 - Highlight disconnected gateways, notify when a gateway newly needs attention, and make every status card open Manager directly at Home, Network > Gateways, Manage > Backup / Restore, or Threats as appropriate. Opening Threats from the Widget selects today from 00:00:00 through 23:59:59 and runs Refresh.
@@ -196,19 +200,19 @@ Important behavior:
 - Open or close the Widget from Manager, and open or restore Manager from the Widget or its tray menu; controls follow the current process and window state.
 - Restore an already-running Manager when it is hidden in the notification area instead of attempting to start another instance.
 - Use an embedded multi-resolution Widget window/tray/shortcut icon, show it from the notification-area icon, close it explicitly, and prevent multiple Widget instances.
-- Optionally start the Widget with Windows or launch it after Setup. Manager, Widget, and Uninstall shortcuts are grouped under Sophos Security Manager in the Start Menu; upgrades remove obsolete standalone shortcuts.
+- Optionally start the Widget with Windows or launch it after Setup. Manager, Widget, and Uninstall shortcuts are grouped under Sophos Security Assistant in the Start Menu; upgrades remove obsolete standalone shortcuts.
 
 ### Help
 
 - Open the installed Microsoft Compiled HTML Help (`.chm`) file from Home.
 - Read the browser-friendly [pre-installation Help](HELP.md) directly on GitHub.
-- Download the versioned standalone Help (`SophosSecurityManager-Help-v<version>.chm`) from each GitHub Release without installing the application.
+- Download the versioned standalone Help (`SophosSecurityAssistant-Help-v<version>.chm`) from each GitHub Release without installing the application.
 - Browse categorized Home, Hosts (IPs, Groups, MAC and FQDN), Network, Threats, Manage, Logging, setup, and troubleshooting topics.
 - Use the built-in table of contents, index, and full-text search.
 
 ## Updates
 
-- The application checks the dedicated `SophosSecurityManager-Releases` repository.
+- The application checks the dedicated `SophosSecurityAssistant-Releases` repository.
 - Update metadata comes directly from the latest GitHub Release tag and installer asset; no separate `version.json` manifest is used.
 - Manager checks at startup and every 10 minutes while it remains open. Unchanged GitHub Releases use a lightweight conditional ETag response. Network failures back off subsequent checks to 20, 40, and at most 60 minutes; a successful check restores the 10-minute interval.
 - When a newer version exists, the automatic update prompt is shown once for that version. The title keeps the update notice visible, and About can run another check on demand.
@@ -241,7 +245,7 @@ The integration layer keeps the official XML API, the official SFOS 22 REST API,
 Requirements: Visual Studio 2026 with the .NET desktop development workload (or .NET 10 SDK 10.0.100 or later) and Inno Setup 6 for the installer.
 
 ```powershell
-build\Build-Installer.cmd -Version 1.3.75
+build\Build-Installer.cmd -Version 1.3.76
 ```
 
 The self-contained installer and versioned standalone CHM Help are written to `artifacts\setup`. Publish both files as GitHub Release assets. See [CHANGELOG.md](CHANGELOG.md) for version history and [build/README.md](build/README.md) for build details.

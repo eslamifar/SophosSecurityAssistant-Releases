@@ -1,8 +1,10 @@
-# Sophos Security Manager Help
+# Sophos Security Assistant Help
 
-Version **1.3.75** · Sophos Firewall 17.5 or later · Windows x64
+Version **1.3.76** · Sophos Firewall 17.5 or later · Windows x64
 
-This browser-readable guide is provided with every release so users can review the application before installing it. The GitHub Release also includes the complete searchable Microsoft Compiled HTML Help file, `SophosSecurityManager-Help-v1.3.75.chm`.
+> **Sleep peacefully at night with Sophos Security Assistant.**
+
+This browser-readable guide is provided with every release so users can review the application before installing it. The GitHub Release also includes the complete searchable Microsoft Compiled HTML Help file, `SophosSecurityAssistant-Help-v1.3.76.chm`.
 
 ## Contents
 
@@ -24,10 +26,10 @@ This browser-readable guide is provided with every release so users can review t
 - Administrator approval is required when Manager starts and for installation or service control.
 - Sophos Firewall 17.5 or later with XML API enabled and the Manager computer's IP allowed.
 - UDP 514 Syslog forwarding is required for Threats. Forward IPS/ATP and Firewall events.
-- Setup installs and starts the `SophosSecurityManagerThreatCollector` Windows service and creates its Windows Firewall rule.
+- Setup installs and starts the `SophosSecurityAssistantThreatCollector` Windows service and creates its Windows Firewall rule.
 - Upgrades preserve user settings and stop Manager, Widget, and the collector safely before replacing files.
 
-Download the latest Setup and standalone CHM from the [latest GitHub Release](https://github.com/eslamifar/SophosSecurityManager-Releases/releases/latest).
+Download the latest Setup and standalone CHM from the [latest GitHub Release](https://github.com/eslamifar/SophosSecurityAssistant-Releases/releases/latest).
 
 ## Home and connection
 
@@ -147,5 +149,5 @@ Downloaded Setup files are SHA-256 verified. Downloads support progress, pause/r
 - **Saved secrets unavailable:** sign in with the Windows account that saved them or enter and save them again.
 - **FTP copy fails:** provide the FTP password during the current Manager session and verify the configured local folder.
 
-For searchable offline documentation, download and open `SophosSecurityManager-Help-v1.3.75.chm` from the Release assets.
+For searchable offline documentation, download and open `SophosSecurityAssistant-Help-v1.3.76.chm` from the Release assets.
 

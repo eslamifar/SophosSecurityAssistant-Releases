@@ -2,7 +2,7 @@
 
 Version **1.3.76** · Sophos Firewall 17.5 or later · Windows x64
 
-> **Sleep peacefully at night with Sophos Security Assistant.**
+> **Sleep more peacefully at night with Sophos Security Assistant.**
 
 This browser-readable guide is provided with every release so users can review the application before installing it. The GitHub Release also includes the complete searchable Microsoft Compiled HTML Help file, `SophosSecurityAssistant-Help-v1.3.76.chm`.
 

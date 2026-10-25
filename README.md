@@ -17,7 +17,7 @@ Manager requires Windows Administrator approval at startup. If elevation is unav
 
 Current release: **1.3.76**
 
-> **Sleep peacefully at night with Sophos Security Assistant.**
+> **Sleep more peacefully at night with Sophos Security Assistant.**
 
 Supported firewall baseline: **Sophos Firewall 17.5 or later**
 

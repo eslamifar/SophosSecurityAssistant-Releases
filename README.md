@@ -77,7 +77,7 @@ Supported firewall baseline: **Sophos Firewall 17.5 or later**
 - Fall back to interface configuration when dedicated gateway entities are unavailable, and preserve the last known Widget state when a refresh returns no gateways.
 - Create, edit, and delete API-managed gateways when supported; interface-managed WAN gateways must be edited through their interface.
 - View, create, edit, and delete supported static routes.
-- View Sophos firewall rules and rule groups in their firewall position order with ID, group, source, destination, service, action, feature, status, and group-count details; edit or delete supported rule records and enable or disable them, with automatic refresh after successful changes.
+- View Sophos firewall rules and rule groups in their firewall position order with ID, group, source, destination, service, action, feature, status, and group-count details. WebAdmin group metadata is reconciled with collapsed rule records so the left tree uses the real Sophos group names and lists every member; edit or delete supported rule records and enable or disable them, with automatic refresh after successful changes.
 - **Experimental:** Network > Rules is still being validated across SFOS versions. Review the detected rule type and details carefully before using any available write action.
 - On SFOS 17.5, automatically fall back to the validated WebAdmin rule inventory/detail protocol when the XML API returns only an empty FirewallRule template. WebAdmin-sourced rules remain read-only unless a mutation protocol has been separately validated; newer firmware continues using supported official APIs.
 - Select interfaces, zones, IP families, and prefixes from validated lists.

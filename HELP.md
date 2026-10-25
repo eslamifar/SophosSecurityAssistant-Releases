@@ -62,7 +62,7 @@ View and manage supported interfaces, gateways, static routes, and firewall rule
 
 > **Experimental:** The **Network > Rules** workspace is still being validated across SFOS versions. It provides ROOT/group navigation and readable rule details, but you should verify the detected rule type and values before using an available add, edit, delete, enable, or disable operation.
 
-The Rules page follows the firewall position order and displays both rule groups and individual rules with ID, group, source, destination, service, action, feature, status, and group-count details. Named XML records can be inspected and changed when the connected API supports those operations; group rows never expose rule-only mutations. On SFOS 17.5, Manager automatically uses the validated WebAdmin Controller inventory and detail requests when the XML API returns only an empty FirewallRule template; those fallback records are read-only unless their change operation has been separately validated.
+The Rules page follows the firewall position order and displays both rule groups and individual rules with ID, group, source, destination, service, action, feature, status, and group-count details. WebAdmin group metadata is reconciled with collapsed rule records so the left tree uses the real Sophos group names and displays every member. Named XML records can be inspected and changed when the connected API supports those operations; group rows never expose rule-only mutations. On SFOS 17.5, Manager automatically uses the validated WebAdmin Controller inventory and detail requests when the XML API returns only an empty FirewallRule template; those fallback records are read-only unless their change operation has been separately validated.
 
 ## Threats and automatic Rules
 

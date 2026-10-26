@@ -1,27 +1,18 @@
 # Sophos Security Assistant
 
-[![Latest release](https://img.shields.io/github/v/release/eslamifar/SophosSecurityAssistant-Releases?display_name=tag&sort=semver)](https://github.com/eslamifar/SophosSecurityAssistant-Releases/releases/latest)
-[![Platform](https://img.shields.io/badge/platform-Windows%20x64-0078D6)](https://github.com/eslamifar/SophosSecurityAssistant-Releases/releases/latest)
-
-## Download
-
-**[Download the latest self-contained Windows x64 installer](https://github.com/eslamifar/SophosSecurityAssistant-Releases/releases/latest)**
-
-**[Read the complete pre-installation Help](HELP.md)** — the latest Release also includes a versioned CHM for offline download.
-
 Sophos Security Assistant is a Windows x64 desktop application for managing supported Sophos Firewall features through the XML API. It combines host/group workflows, network configuration, backup settings, application logging, automatic updates, continuous IPS/ATP Syslog collection, and an optional standalone desktop status widget.
 
 Source: [github.com/eslamifar/SophosSecurityAssistant](https://github.com/eslamifar/SophosSecurityAssistant) · Releases: [github.com/eslamifar/SophosSecurityAssistant-Releases](https://github.com/eslamifar/SophosSecurityAssistant-Releases)
 
 Manager requires Windows Administrator approval at startup. If elevation is unavailable or the UAC request is cancelled, Manager closes without opening. The independent Widget does not require elevation merely to display status.
 
-Current release: **1.3.76**
+Current release: **1.3.77**
 
 > **Sleep more peacefully at night with Sophos Security Assistant.**
 
 Supported firewall baseline: **Sophos Firewall 17.5 or later**
 
-> **Version 1.3.76 includes a Windows service for threat logs and optional rule automation.** Setup creates and starts `SophosSecurityAssistantThreatCollector`, configures it for automatic startup on UDP 514, and adds the required Windows Firewall rule. The service keeps collecting IPS/ATP Syslog events after the desktop application is closed. See [Threat Collector setup](#threat-collector-setup) before using the Threats tab.
+> **Version 1.3.77 includes a Windows service for threat logs and optional rule automation.** Setup creates and starts `SophosSecurityAssistantThreatCollector`, configures it for automatic startup on UDP 514, and adds the required Windows Firewall rule. The service keeps collecting IPS/ATP Syslog events after the desktop application is closed. See [Threat Collector setup](#threat-collector-setup) before using the Threats tab.
 
 ## Main workspaces
 
@@ -242,12 +233,13 @@ The integration layer keeps the official XML API, the official SFOS 22 REST API,
 
 ## Build
 
-Requirements: Visual Studio 2026 with the .NET desktop development workload (or .NET 10 SDK 10.0.100 or later) and Inno Setup 6 for the installer.
+Requirements: Visual Studio 2026 with the .NET desktop development workload (or .NET 10 SDK 10.0.100 or later), Inno Setup 6, and a publicly trusted Authenticode Code Signing certificate for a release installer.
 
 ```powershell
-build\Build-Installer.cmd -Version 1.3.76
+$env:SSA_SIGNING_CERTIFICATE_THUMBPRINT = 'CERTIFICATE_THUMBPRINT_WITHOUT_SPACES'
+build\Build-Installer.cmd -Version 1.3.77
 ```
 
-The self-contained installer and versioned standalone CHM Help are written to `artifacts\setup`. Publish both files as GitHub Release assets. See [CHANGELOG.md](CHANGELOG.md) for version history and [build/README.md](build/README.md) for build details.
+The self-contained installer and versioned standalone CHM Help are written to `artifacts\setup`. The release builder signs first-party binaries and Setup with SHA-256, timestamps them and fails rather than producing a publishable unsigned installer. `-AllowUnsigned` is reserved for local testing and its output must not be uploaded. Publish Setup and Help as GitHub Release assets. See [CHANGELOG.md](CHANGELOG.md) for version history and [build/README.md](build/README.md) for certificate-store and signing details.
 
 Release builds obfuscate all first-party Manager, Widget, API, Core, Infrastructure, Models, and Services assemblies. The release builder also starts both packaged Manager and Widget modes with strict smoke-test error handling before compiling Setup.

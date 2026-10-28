@@ -6,13 +6,13 @@ Source: [github.com/eslamifar/SophosSecurityAssistant](https://github.com/eslami
 
 Manager requires Windows Administrator approval at startup. If elevation is unavailable or the UAC request is cancelled, Manager closes without opening. The independent Widget does not require elevation merely to display status.
 
-Current release: **1.3.77**
+Current release: **1.3.78**
 
 > **Sleep more peacefully at night with Sophos Security Assistant.**
 
 Supported firewall baseline: **Sophos Firewall 17.5 or later**
 
-> **Version 1.3.77 includes a Windows service for threat logs and optional rule automation.** Setup creates and starts `SophosSecurityAssistantThreatCollector`, configures it for automatic startup on UDP 514, and adds the required Windows Firewall rule. The service keeps collecting IPS/ATP Syslog events after the desktop application is closed. See [Threat Collector setup](#threat-collector-setup) before using the Threats tab.
+> **Version 1.3.78 includes a Windows service for threat logs and optional rule automation.** Setup creates and starts `SophosSecurityAssistantThreatCollector`, configures it for automatic startup on UDP 514, and adds the required Windows Firewall rule. The service keeps collecting IPS/ATP Syslog events after the desktop application is closed. See [Threat Collector setup](#threat-collector-setup) before using the Threats tab.
 
 ## Main workspaces
 
@@ -90,6 +90,7 @@ Supported firewall baseline: **Sophos Firewall 17.5 or later**
 - Follow per-IP group-addition progress and cancel remaining operations after the current request finishes.
 - Use the first Target group entry as an explicit selection prompt; adding selected IPs is blocked until a real Sophos group is selected.
 - Review current timed Rule memberships, upcoming expirations, overdue entries, and recent expiration outcomes in **Expirations**, which reloads shared Rule state every 60 seconds while visible.
+- In **Rules**, a green row means the enabled automatic Rule is genuinely managed by a running, configured, unpaused and recently reporting Windows service; the Automation checkbox alone does not make a row green. Add, Edit and Delete reload the persisted shared list after success.
 - Double-click an IP in a threat or membership table to view its complete stored attack history and Rule-automation activity.
 - Review All, Critical, Major, and Moderate threats over an exact From/To date-time range. Live mode advances To to the current time on every 5-second auto refresh; changing To manually preserves a fixed historical range.
 - Chart daily Critical, Major, Moderate, and other threat-event trends over an exact From/To date-time range in **Trends**. Live mode advances To to the current time every 30 seconds, while disabling it preserves a fixed historical range; click a day to display its exact severity totals and every attacking IP, then double-click an IP for its full history.
@@ -237,7 +238,7 @@ Requirements: Visual Studio 2026 with the .NET desktop development workload (or 
 
 ```powershell
 $env:SSA_SIGNING_CERTIFICATE_THUMBPRINT = 'CERTIFICATE_THUMBPRINT_WITHOUT_SPACES'
-build\Build-Installer.cmd -Version 1.3.77
+build\Build-Installer.cmd -Version 1.3.78
 ```
 
 The self-contained installer and versioned standalone CHM Help are written to `artifacts\setup`. The release builder signs first-party binaries and Setup with SHA-256, timestamps them and fails rather than producing a publishable unsigned installer. `-AllowUnsigned` is reserved for local testing and its output must not be uploaded. Publish Setup and Help as GitHub Release assets. See [CHANGELOG.md](CHANGELOG.md) for version history and [build/README.md](build/README.md) for certificate-store and signing details.

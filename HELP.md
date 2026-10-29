@@ -1,10 +1,10 @@
 # Sophos Security Assistant Help
 
-Version **1.3.78** · Sophos Firewall 17.5 or later · Windows x64
+Version **1.3.79** · Sophos Firewall 17.5 or later · Windows x64
 
 > **Sleep more peacefully at night with Sophos Security Assistant.**
 
-This browser-readable guide is provided with every release so users can review the application before installing it. The GitHub Release also includes the complete searchable Microsoft Compiled HTML Help file, `SophosSecurityAssistant-Help-v1.3.78.chm`.
+This browser-readable guide is provided with every release so users can review the application before installing it. The GitHub Release also includes the complete searchable Microsoft Compiled HTML Help file, `SophosSecurityAssistant-Help-v1.3.79.chm`.
 
 ## Contents
 
@@ -123,6 +123,8 @@ Configure SMTP with None, STARTTLS, or implicit SSL/TLS encryption. Test deliver
 
 Logging reads all retained daily application logs over an exact From/To range. Live mode advances To automatically. Filter by Connection/API, Hosts/Groups, Network, Threats/Rules, Backup/Restore, Updates, Email, or Application. Logs record application runtime and Sophos connection duration.
 
+Use **Report a problem** in Logging or About to prepare a report for the development team. Describe the problem, independently choose whether to include basic system information and up to 80 recent application-log entries, and review the exact sanitized text. Passwords, passphrases, secrets, tokens, authorization values, cookies, API keys, and URL credentials are redacted. Nothing is uploaded automatically. The consent checkbox must be selected before Manager copies the complete report and opens the GitHub issue page, where the user performs the final review and submission.
+
 Use Manage > Config to retain 14, 30, 60, 90, 120, 180, 270, or 365 days.
 
 ## Desktop Widget
@@ -151,5 +153,5 @@ Downloaded Setup files are SHA-256 verified. Downloads support progress, pause/r
 - **Saved secrets unavailable:** sign in with the Windows account that saved them or enter and save them again.
 - **FTP copy fails:** provide the FTP password during the current Manager session and verify the configured local folder.
 
-For searchable offline documentation, download and open `SophosSecurityAssistant-Help-v1.3.78.chm` from the Release assets.
+For searchable offline documentation, download and open `SophosSecurityAssistant-Help-v1.3.79.chm` from the Release assets.
 

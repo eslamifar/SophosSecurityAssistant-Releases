@@ -1,10 +1,10 @@
 # Sophos Security Assistant Help
 
-Version **1.3.79** · Sophos Firewall 17.5 or later · Windows x64
+Version **1.3.80** · Sophos Firewall 17.5 or later · Windows x64
 
 > **Sleep more peacefully at night with Sophos Security Assistant.**
 
-This browser-readable guide is provided with every release so users can review the application before installing it. The GitHub Release also includes the complete searchable Microsoft Compiled HTML Help file, `SophosSecurityAssistant-Help-v1.3.79.chm`.
+This browser-readable guide is provided with every release so users can review the application before installing it. The GitHub Release also includes the complete searchable Microsoft Compiled HTML Help file, `SophosSecurityAssistant-Help-v1.3.80.chm`.
 
 ## Contents
 
@@ -123,7 +123,11 @@ Configure SMTP with None, STARTTLS, or implicit SSL/TLS encryption. Test deliver
 
 Logging reads all retained daily application logs over an exact From/To range. Live mode advances To automatically. Filter by Connection/API, Hosts/Groups, Network, Threats/Rules, Backup/Restore, Updates, Email, or Application. Logs record application runtime and Sophos connection duration.
 
-Use **Report a problem** in Logging or About to prepare a report for the development team. Describe the problem, independently choose whether to include basic system information and up to 80 recent application-log entries, and review the exact sanitized text. Passwords, passphrases, secrets, tokens, authorization values, cookies, API keys, and URL credentials are redacted. Nothing is uploaded automatically. The consent checkbox must be selected before Manager copies the complete report and opens the GitHub issue page, where the user performs the final review and submission.
+Use **Privacy-protected diagnostic reporting** in Logging or About to preview the exact pending JSON and manually send it directly to `https://api.eslamifar.com`. A separate explicit opt-in permits automatic uploads after application errors, once daily at a chosen local time, at startup, and at exit; enable each trigger independently and withdraw consent at any time. The scheduled/start/exit triggers only send already-pending Error/Fatal diagnostics and do not generate usage or lifecycle telemetry. One-time sender setup requires the installation's client ID and HMAC secret, which Windows protects with DPAPI.
+
+The payload is deliberately restricted to application/version, component/category, severity, exception type, a sanitized stack trace, timestamps, occurrence count, generic OS/.NET versions, and cryptographic identifiers. It does not include exception messages or raw logs. Client sanitization and server-side validation remove or reject usernames, passwords, secrets, tokens, IPv4/IPv6 addresses, MAC addresses, email addresses, URLs, hostnames, user paths, and raw client IDs.
+
+This protects report content but cannot make a direct HTTPS connection invisible: IIS, a reverse proxy, and the network transport can inherently observe the source IP. The Receiver report database does not persist that source IP. Review the preview before a manual send and apply an appropriate IIS/proxy access-log retention policy.
 
 Use Manage > Config to retain 14, 30, 60, 90, 120, 180, 270, or 365 days.
 
@@ -153,5 +157,5 @@ Downloaded Setup files are SHA-256 verified. Downloads support progress, pause/r
 - **Saved secrets unavailable:** sign in with the Windows account that saved them or enter and save them again.
 - **FTP copy fails:** provide the FTP password during the current Manager session and verify the configured local folder.
 
-For searchable offline documentation, download and open `SophosSecurityAssistant-Help-v1.3.79.chm` from the Release assets.
+For searchable offline documentation, download and open `SophosSecurityAssistant-Help-v1.3.80.chm` from the Release assets.
 

@@ -6,13 +6,13 @@ Source: [github.com/eslamifar/SophosSecurityAssistant](https://github.com/eslami
 
 Manager requires Windows Administrator approval at startup. If elevation is unavailable or the UAC request is cancelled, Manager closes without opening. The independent Widget does not require elevation merely to display status.
 
-Current release: **1.3.79**
+Current release: **1.3.80**
 
 > **Sleep more peacefully at night with Sophos Security Assistant.**
 
 Supported firewall baseline: **Sophos Firewall 17.5 or later**
 
-> **Version 1.3.79 includes a Windows service for threat logs and optional rule automation.** Setup creates and starts `SophosSecurityAssistantThreatCollector`, configures it for automatic startup on UDP 514, and adds the required Windows Firewall rule. The service keeps collecting IPS/ATP Syslog events after the desktop application is closed. See [Threat Collector setup](#threat-collector-setup) before using the Threats tab.
+> **Version 1.3.80 includes a Windows service for threat logs, optional rule automation, and consent-based privacy-protected diagnostic delivery.** Setup creates and starts `SophosSecurityAssistantThreatCollector`, configures it for automatic startup on UDP 514, and adds the required Windows Firewall rule. The service keeps collecting IPS/ATP Syslog events after the desktop application is closed. See [Threat Collector setup](#threat-collector-setup) before using the Threats tab.
 
 ## Main workspaces
 
@@ -178,7 +178,9 @@ Important behavior:
 - View application logs over an exact From/To date-time range with automatic refresh and optional Live mode.
 - Filter entries by Connection/API, Hosts/Groups, Network, Threats/Rules, Backup/Restore, Updates, Email, or Application category.
 - Refresh manually, copy all displayed text, clear only the view, or open the log folder.
-- Select **Report a problem** in Logging or About to describe an issue, independently choose system information and recent logs, and review the complete sanitized report. Passwords, secrets, tokens, authorization values, cookies, API keys, and URL credentials are redacted. Nothing is transmitted automatically: explicit consent is required before the report is copied and the development team's GitHub issue page opens for final user review and submission.
+- Open **Privacy-protected diagnostic reporting** in Logging or About to preview the exact pending JSON and manually send it directly to `https://api.eslamifar.com`. A separate explicit opt-in can permit automatic uploads after errors, once daily at a chosen local time, at application startup, and at application exit. Each trigger can be enabled independently and consent can be withdrawn at any time. Scheduled/start/exit triggers only send already-pending Error/Fatal diagnostics; they do not create usage or lifecycle telemetry.
+- Reports contain only a bounded application/version, component/category, severity, exception type, sanitized stack trace, timestamps, occurrence count, generic OS/.NET versions, and cryptographic identifiers. Exception messages, log text, usernames, passwords, secrets, tokens, IPv4/IPv6 addresses, MAC addresses, email addresses, URLs, hostnames, user paths, and raw client IDs are excluded or rejected by both client and server validation. The per-installation HMAC secret is protected by Windows DPAPI and is never included in a report.
+- This is privacy-protected rather than network-anonymous: any direct HTTPS service and its IIS/reverse-proxy layer can inherently observe the connection source IP. The Receiver report database does not store that IP, and raw client IDs are replaced with a server-peppered tag. Review the preview before manual submission and configure IIS/proxy access-log retention according to your privacy policy.
 - Application logs are stored under `%LocalAppData%\SophosSecurityAssistant\logs`.
 - Logs roll daily; choose a 14, 30, 60, 90, 120, 180, 270, or 365-day retention period under Manage > Config.
 
@@ -239,7 +241,7 @@ Requirements: Visual Studio 2026 with the .NET desktop development workload (or 
 
 ```powershell
 $env:SSA_SIGNING_CERTIFICATE_THUMBPRINT = 'CERTIFICATE_THUMBPRINT_WITHOUT_SPACES'
-build\Build-Installer.cmd -Version 1.3.79
+build\Build-Installer.cmd -Version 1.3.80
 ```
 
 The self-contained installer and versioned standalone CHM Help are written to `artifacts\setup`. With a configured code-signing certificate, the release builder signs first-party binaries and Setup with SHA-256 and timestamps them. When the project owner deliberately uses `-AllowUnsigned`, Windows may display an Unknown publisher/SmartScreen warning and that limitation must be disclosed in the GitHub Release notes. Publish Setup and Help as GitHub Release assets. See [CHANGELOG.md](CHANGELOG.md) for version history and [build/README.md](build/README.md) for certificate-store and signing details.

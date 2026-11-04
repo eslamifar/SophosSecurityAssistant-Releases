@@ -8,13 +8,13 @@ Download: **[Latest Sophos Security Assistant release](https://github.com/eslami
 
 Manager requires Windows Administrator approval at startup. If elevation is unavailable or the UAC request is cancelled, Manager closes without opening. The independent Widget does not require elevation merely to display status.
 
-Current release: **1.3.84**
+Current release: **1.3.85**
 
 > **Sleep more peacefully at night with Sophos Security Assistant.**
 
 Supported firewall baseline: **Sophos Firewall 17.5 or later**
 
-> **Version 1.3.84 includes a Windows service for threat logs, optional rule automation, and consent-based privacy-protected diagnostic delivery.** Setup creates and starts `SophosSecurityAssistantThreatCollector`, configures it for automatic startup on UDP 514, and adds the required Windows Firewall rule. The service keeps collecting IPS/ATP Syslog events after the desktop application is closed. See [Threat Collector setup](#threat-collector-setup) before using the Threats tab.
+> **Version 1.3.85 includes a Windows service for threat logs, optional rule automation, and consent-based privacy-protected diagnostic delivery.** Setup creates and starts `SophosSecurityAssistantThreatCollector`, configures it for automatic startup on UDP 514, and adds the required Windows Firewall rule. The service keeps collecting IPS/ATP Syslog events after the desktop application is closed. See [Threat Collector setup](#threat-collector-setup) before using the Threats tab.
 
 ## Main workspaces
 
@@ -160,7 +160,7 @@ Important behavior:
 - Service credentials and automation configuration stay protected under `%ProgramData%\SophosSecurityAssistant\Automation`. Once configured and unpaused, enabled automatic Rules run in the service without Manager elevation or an open Manager window. The Rule checkbox alone does not configure service credentials; use the setup button once. If shared Rules storage is unavailable, Manager falls back to personal manual-only Rules.
 - Local Windows users with access to the shared Rules directory can change automatic Rules, which may cause the service to make Sophos changes using its configured credentials. Grant this access only on trusted workstations.
 - Deduplicate queued IP/severity evaluations, avoid changing existing manual memberships, maintain expirations while Manager is closed, and pause automatically after three consecutive failures.
-- Manage > Config shows the collector status, Start/Restart/Stop/Windows Services controls, the automatic-Rule setup button, and configurable folders for automatic-block CSV history and FTP backup copies. Automatic-block CSV rows include source and destination IPs; older rows receive a blank destination during schema migration. If Critical.csv, Major.csv, or Moderate.csv is moved or deleted, the running service recreates the missing file with the correct header within about ten seconds. Manager itself now requires Administrator approval at startup; automatic service execution continues independently after Manager closes.
+- Manage > Config shows the collector status, Start/Restart/Stop/Windows Services controls, the automatic-Rule setup button, and configurable folders for automatic-block CSV history and FTP backup copies. Restart waits for Windows to confirm a complete stop before starting the service again, then verifies that it reaches Running. Automatic-block CSV rows include source and destination IPs; older rows receive a blank destination during schema migration. If Critical.csv, Major.csv, or Moderate.csv is moved or deleted, the running service recreates the missing file with the correct header within about ten seconds. Manager itself now requires Administrator approval at startup; automatic service execution continues independently after Manager closes.
 - The Windows-service section now shows credential readiness and searchable per-IP automatic-Rule activity, including the exact expiry date and whether an expired IP was removed from its group or retained by another Rule. Last run in the Rules grid refreshes while the tab is open when the service updates a Rule.
 - Service activity excludes manual Apply; it records automatic additions, failures, expiry removals, and matching IPs already managed or already in the target group. It remains empty until the service has automation credentials and checks a matching automatic Rule. The Last report timestamp is historical, not a live-error indicator.
 - Filter Service activity to the last 24 hours, 7 days (default), 30 days, or all time. The grid displays at most the newest 100 matches and reads history newest-first.
@@ -243,7 +243,7 @@ Requirements: Visual Studio 2026 with the .NET desktop development workload (or 
 
 ```powershell
 $env:SSA_SIGNING_CERTIFICATE_THUMBPRINT = 'CERTIFICATE_THUMBPRINT_WITHOUT_SPACES'
-build\Build-Installer.cmd -Version 1.3.84
+build\Build-Installer.cmd -Version 1.3.85
 ```
 
 The self-contained installer and versioned standalone CHM Help are written to `artifacts\setup`. With a configured code-signing certificate, the release builder signs first-party binaries and Setup with SHA-256 and timestamps them. When the project owner deliberately uses `-AllowUnsigned`, Windows may display an Unknown publisher/SmartScreen warning and that limitation must be disclosed in the GitHub Release notes. Publish Setup and Help as GitHub Release assets. See [CHANGELOG.md](CHANGELOG.md) for version history and [build/README.md](build/README.md) for certificate-store and signing details.

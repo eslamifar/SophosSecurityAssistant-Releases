@@ -4,15 +4,17 @@ Sophos Security Assistant is a Windows x64 desktop application for managing supp
 
 Source: [github.com/eslamifar/SophosSecurityAssistant](https://github.com/eslamifar/SophosSecurityAssistant) · Releases: [github.com/eslamifar/SophosSecurityAssistant-Releases](https://github.com/eslamifar/SophosSecurityAssistant-Releases)
 
+Download: **[Latest Sophos Security Assistant release](https://github.com/eslamifar/SophosSecurityAssistant-Releases/releases/latest)**
+
 Manager requires Windows Administrator approval at startup. If elevation is unavailable or the UAC request is cancelled, Manager closes without opening. The independent Widget does not require elevation merely to display status.
 
-Current release: **1.3.81**
+Current release: **1.3.84**
 
 > **Sleep more peacefully at night with Sophos Security Assistant.**
 
 Supported firewall baseline: **Sophos Firewall 17.5 or later**
 
-> **Version 1.3.81 includes a Windows service for threat logs, optional rule automation, and consent-based privacy-protected diagnostic delivery.** Setup creates and starts `SophosSecurityAssistantThreatCollector`, configures it for automatic startup on UDP 514, and adds the required Windows Firewall rule. The service keeps collecting IPS/ATP Syslog events after the desktop application is closed. See [Threat Collector setup](#threat-collector-setup) before using the Threats tab.
+> **Version 1.3.84 includes a Windows service for threat logs, optional rule automation, and consent-based privacy-protected diagnostic delivery.** Setup creates and starts `SophosSecurityAssistantThreatCollector`, configures it for automatic startup on UDP 514, and adds the required Windows Firewall rule. The service keeps collecting IPS/ATP Syslog events after the desktop application is closed. See [Threat Collector setup](#threat-collector-setup) before using the Threats tab.
 
 ## Main workspaces
 
@@ -151,7 +153,7 @@ Important behavior:
 - Optionally run enabled rules automatically in the Windows service whenever a matching-severity threat arrives.
 - Keep one effective automatic severity per IP: higher-severity matches promote the IP and remove lower-severity group memberships, lower-severity matches cannot downgrade it, and stronger same-group Rules may extend but never shorten its expiration.
 - Auto-refresh Threats Logs every 60 seconds while visible; Live mode advances To to the current time, while disabling it preserves a fixed historical range.
-- Use **Manage > Config > Set up automatic Rules** for a one-time administrator-approved connection test and protected service-credential setup. The form supports an IPv4/CIDR allowlist, per-minute change limit, and optional catch-up evaluation of stored threats within Rule windows.
+- Use **Manage > Config > Set up automatic Rules** for an administrator-approved connection test and protected service-credential setup. The form supports an IPv4/CIDR allowlist, per-minute change limit, and optional catch-up evaluation of stored threats within Rule windows. If the main Sophos host, port, username, or password changes after automation is configured, Manager shows a persistent action-required warning until **Test and enable** succeeds with the current credentials.
 - Max changes / minute delays excess queued additions until the next minute; the IP/CIDR allowlist excludes trusted addresses and networks; stored-threat catch-up is a one-time evaluation of events still inside enabled Rule windows.
 - Create, edit, preview, manually apply, and enable automatic shared Rules from the elevated Manager. Both Manager and the Threat Collector use `%ProgramData%\SophosSecurityAssistant\Rules`.
 - Rename a selected IP host group from Hosts > Groups using the Edit button or by double-clicking the group. Members are preserved, and matching Rule targets and tracked timed memberships are migrated to the new name.
@@ -241,7 +243,7 @@ Requirements: Visual Studio 2026 with the .NET desktop development workload (or 
 
 ```powershell
 $env:SSA_SIGNING_CERTIFICATE_THUMBPRINT = 'CERTIFICATE_THUMBPRINT_WITHOUT_SPACES'
-build\Build-Installer.cmd -Version 1.3.81
+build\Build-Installer.cmd -Version 1.3.84
 ```
 
 The self-contained installer and versioned standalone CHM Help are written to `artifacts\setup`. With a configured code-signing certificate, the release builder signs first-party binaries and Setup with SHA-256 and timestamps them. When the project owner deliberately uses `-AllowUnsigned`, Windows may display an Unknown publisher/SmartScreen warning and that limitation must be disclosed in the GitHub Release notes. Publish Setup and Help as GitHub Release assets. See [CHANGELOG.md](CHANGELOG.md) for version history and [build/README.md](build/README.md) for certificate-store and signing details.

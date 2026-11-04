@@ -1,10 +1,10 @@
 # Sophos Security Assistant Help
 
-Version **1.3.81** · Sophos Firewall 17.5 or later · Windows x64
+Version **1.3.84** · Sophos Firewall 17.5 or later · Windows x64
 
 > **Sleep more peacefully at night with Sophos Security Assistant.**
 
-This browser-readable guide is provided with every release so users can review the application before installing it. The GitHub Release also includes the complete searchable Microsoft Compiled HTML Help file, `SophosSecurityAssistant-Help-v1.3.81.chm`.
+This browser-readable guide is provided with every release so users can review the application before installing it. The GitHub Release also includes the complete searchable Microsoft Compiled HTML Help file, `SophosSecurityAssistant-Help-v1.3.84.chm`.
 
 ## Contents
 
@@ -82,7 +82,7 @@ Rules can match Critical, Major, and Moderate events by attack count and rolling
 
 In the Rules grid, green identifies an enabled automatic Rule that is genuinely managed by a running, configured, unpaused and recently reporting Windows service. Selecting Automation alone is not sufficient. After a successful Add, Edit or Delete, Manager reloads the persisted shared Rule list once so the table matches the state visible to the service.
 
-Use **Manage > Config > Set up automatic Rules** to save protected service credentials, configure trusted IP/CIDR exclusions, set the change-rate limit, and optionally catch up stored threats still inside Rule windows.
+Use **Manage > Config > Set up automatic Rules** to save protected service credentials, configure trusted IP/CIDR exclusions, set the change-rate limit, and optionally catch up stored threats still inside Rule windows. If the main Sophos host, port, username, or password changes later, Manager keeps an action-required warning visible until **Test and enable** succeeds with the current credentials.
 
 **Expirations** reloads shared Rule state every 60 seconds. **Trends** supports live or fixed date ranges and lists every attacking IP for a selected day. **Logs** displays Windows-service Rule actions with live or fixed filtering.
 
@@ -157,5 +157,5 @@ Downloaded Setup files are SHA-256 verified. Downloads support progress, pause/r
 - **Saved secrets unavailable:** sign in with the Windows account that saved them or enter and save them again.
 - **FTP copy fails:** provide the FTP password during the current Manager session and verify the configured local folder.
 
-For searchable offline documentation, download and open `SophosSecurityAssistant-Help-v1.3.81.chm` from the Release assets.
+For searchable offline documentation, download and open `SophosSecurityAssistant-Help-v1.3.84.chm` from the Release assets.
 

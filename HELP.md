@@ -1,7 +1,7 @@
 # Sophos Security Assistant Help
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/eslamifar/SophosSecurityAssistant/master/SophosSecurityAssistant.UI/Resources/SecurityAssistantIcon.png" width="96" alt="Sophos Security Assistant icon">
+  <img src="https://github.com/eslamifar/SophosSecurityAssistant-Releases/releases/latest/download/SecurityAssistantIcon.png" width="96" alt="Sophos Security Assistant icon">
 </p>
 
 Version **1.3.86** · Sophos Firewall 17.5 or later · Windows x64

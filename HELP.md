@@ -1,12 +1,16 @@
 # Sophos Security Assistant Help
 
-Version **1.3.85** · Sophos Firewall 17.5 or later · Windows x64
+<p align="center">
+  <img src="https://raw.githubusercontent.com/eslamifar/SophosSecurityAssistant/master/SophosSecurityAssistant.UI/Resources/SecurityAssistantIcon.png" width="96" alt="Sophos Security Assistant icon">
+</p>
+
+Version **1.3.86** · Sophos Firewall 17.5 or later · Windows x64
 
 > **Sleep more peacefully at night with Sophos Security Assistant.**
 
-This browser-readable guide is provided with every release so users can review the application before installing it. The GitHub Release also includes the complete searchable Microsoft Compiled HTML Help file, `SophosSecurityAssistant-Help-v1.3.85.chm`.
+This browser-readable guide is provided with every release so users can review the application before installing it. The GitHub Release also includes the complete searchable Microsoft Compiled HTML Help file, `SophosSecurityAssistant-Help-v1.3.86.chm`.
 
-## Contents
+## 🧭 Contents
 
 - [Requirements and installation](#requirements-and-installation)
 - [Home and connection](#home-and-connection)
@@ -20,7 +24,7 @@ This browser-readable guide is provided with every release so users can review t
 - [Updates](#updates)
 - [Troubleshooting](#troubleshooting)
 
-## Requirements and installation
+## 📦 Requirements and installation
 
 - Windows 10 or Windows 11 x64.
 - Administrator approval is required when Manager starts and for installation or service control.
@@ -29,7 +33,7 @@ This browser-readable guide is provided with every release so users can review t
 - Setup installs and starts the `SophosSecurityAssistantThreatCollector` Windows service and creates its Windows Firewall rule.
 - Upgrades preserve user settings and stop Manager, Widget, and the collector safely before replacing files.
 
-Download the latest Setup and standalone CHM from the [latest GitHub Release](https://github.com/eslamifar/SophosSecurityAssistant-Releases/releases/latest).
+⬇️ Download the latest Setup and standalone CHM from the **[latest GitHub Release](https://github.com/eslamifar/SophosSecurityAssistant-Releases/releases/latest)**.
 
 ## Home and connection
 
@@ -157,5 +161,5 @@ Downloaded Setup files are SHA-256 verified. Downloads support progress, pause/r
 - **Saved secrets unavailable:** sign in with the Windows account that saved them or enter and save them again.
 - **FTP copy fails:** provide the FTP password during the current Manager session and verify the configured local folder.
 
-For searchable offline documentation, download and open `SophosSecurityAssistant-Help-v1.3.85.chm` from the Release assets.
+For searchable offline documentation, download and open `SophosSecurityAssistant-Help-v1.3.86.chm` from the Release assets.
 

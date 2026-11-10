@@ -12,13 +12,13 @@ Source: [github.com/eslamifar/SophosSecurityAssistant](https://github.com/eslami
 
 Manager requires Windows Administrator approval at startup. If elevation is unavailable or the UAC request is cancelled, Manager closes without opening. The independent Widget does not require elevation merely to display status.
 
-Current release: **1.3.87**
+Current release: **1.3.88**
 
 > **Sleep more peacefully at night with Sophos Security Assistant.**
 
 Supported firewall baseline: **Sophos Firewall 17.5 or later**
 
-> **Version 1.3.87 includes a Windows service for threat logs, optional rule automation, and consent-based privacy-protected diagnostic delivery.** Setup verifies the collector executable, creates/configures and starts `SophosSecurityAssistantThreatCollector`, checks every Windows Service Control result, configures automatic startup on UDP 514, and adds the required Windows Firewall rule. The service keeps collecting IPS/ATP Syslog events after the desktop application is closed. See [Threat Collector setup](#threat-collector-setup) before using the Threats tab.
+> **Version 1.3.88 includes a Windows service for threat logs, optional rule automation, duplicate-safe Sophos Log Viewer CSV import, paged Threat tables, and consent-based privacy-protected diagnostic delivery.** Setup verifies the collector executable, creates/configures and starts `SophosSecurityAssistantThreatCollector`, checks every Windows Service Control result, configures automatic startup on UDP 514, and adds the required Windows Firewall rule. The service keeps collecting IPS/ATP Syslog events after the desktop application is closed. See [Threat Collector setup](#threat-collector-setup) before using the Threats tab.
 
 ## 🧭 Main workspaces
 
@@ -121,13 +121,14 @@ Important behavior:
 
 - The Sophos Reports page reads historical data stored on the firewall; the collector only receives events forwarded after Syslog was configured and the service was running.
 - Existing historical report rows cannot be backfilled through Syslog.
+- Export IPS/IDP or ATP rows from Sophos **Log viewer** as CSV, then use **Threats > Rules > Import IPs to rule** to backfill local Threat history. The importer validates rows, skips duplicates, reports rejected rows, and can immediately preview the selected Rule against the imported events.
 - Firewall, web, antivirus, and other non-IPS/ATP messages may be received but are counted as non-threat logs and are not added to the Threat IP table.
 - Threat data is stored at `%ProgramData%\SophosSecurityAssistant\Threats\threats.jsonl`.
 - Collector diagnostics are stored in the same Threats directory; limited rejected-message samples are written under `%ProgramData%\SophosSecurityAssistant\Logs`.
 
 ### Threat Rules
 
-- Rules is followed by Logs in Threats. Set Order while adding or editing a Rule, or use Move up / Move down; the service evaluates enabled automatic Rules in that order. Logs shows Windows-service Rule activity with date and search filters.
+- Rules is followed by Logs in Threats. Edit Order directly or drag rows to reorder them; select Enabled to save the state immediately, and double-click a Rule row to edit it. The service evaluates enabled automatic Rules in that order. Logs shows Windows-service Rule activity with date and search filters.
 - Rules act on threat source IPs and Sophos groups only; there are no email-action Rules yet.
 
 > **Required Sophos rule hardening:** Adding a detected IP to a Hacker group does not, by itself, guarantee that Sophos Business Application rules for published servers will reject it. On every WAN-to-LAN Business Application rule that publishes an internal service, add `Hacker-Manual`, `Hacker-Moderate`, `Hacker-Major`, and `Hacker-Critical` to **Blocked client networks**. Keep IPS enabled as an additional layer. The audit supports conventional and alternate/legacy FirewallRule XML layouts. Some SFOS/API combinations return only an empty FirewallRule template instead of the configured rule inventory; the application identifies that as **audit unavailable**, not as proof that a WAN rule is missing or disabled, and asks for Web Admin verification. The top-level WAN-to-LAN drop rule should also be retained, but it is not a substitute for the per-rule blocked-client setting on legacy SFOS releases. There is a short interval between the first detected event and automatic group membership, and connections established before membership may remain active until they close or expire. Enable **Firewall** log forwarding to the collector as well as IPS/ATP logs; post-block verification records an **ENFORCEMENT FAILURE** when Sophos subsequently allows a new connection from an actively blocked IP.
@@ -146,7 +147,7 @@ Important behavior:
 - Refresh backup status every 10 seconds. After the FTP password is entered once, Manager protects it for the current Windows user and can count remote files and archive later FTP backups without requiring it again each session. Sophos itself does not return stored FTP passwords through XML API.
 - Open the configured FTP destination in Windows Explorer without placing credentials in the URL.
 - Restart, shutdown, direct backup download, and restore-file upload remain unavailable when they are not exposed by the supported XML API; use Sophos Web Admin for those operations.
-- Create, edit, duplicate, enable/disable, and delete up to 10 locally stored threat rules.
+- Create, double-click to edit, duplicate, enable/disable from the Enabled cell, drag to reorder, and delete up to 10 locally stored threat rules.
 - Keep the visibly selected Rule synchronized with Edit, Duplicate, Enable/Disable, Delete, and Preview / Apply actions after the grid refreshes.
 - Match public source IPv4 addresses by attack count, selected Critical/Major/Moderate severities, and a rolling minute/hour/day window.
 - Preview matching IPs and their current Sophos memberships before manually applying a rule to its target IP group.
@@ -157,6 +158,7 @@ Important behavior:
 - Optionally run enabled rules automatically in the Windows service whenever a matching-severity threat arrives.
 - Keep one effective automatic severity per IP: higher-severity matches promote the IP and remove lower-severity group memberships, lower-severity matches cannot downgrade it, and stronger same-group Rules may extend but never shorten its expiration.
 - Auto-refresh Threats Logs every 60 seconds while visible; Live mode advances To to the current time, while disabling it preserves a fixed historical range.
+- Browse All, Critical, Major, and Moderate threat tables in pages of 100 source IPs using Previous and Next; sorting is applied to the full result set and Export includes every row, not only the visible page.
 - Use **Manage > Config > Set up automatic Rules** for an administrator-approved connection test and protected service-credential setup. The form supports an IPv4/CIDR allowlist, per-minute change limit, and optional catch-up evaluation of stored threats within Rule windows. If the main Sophos host, port, username, or password changes after automation is configured, Manager shows a persistent action-required warning until **Test and enable** succeeds with the current credentials.
 - Max changes / minute delays excess queued additions until the next minute; the IP/CIDR allowlist excludes trusted addresses and networks; stored-threat catch-up is a one-time evaluation of events still inside enabled Rule windows.
 - Create, edit, preview, manually apply, and enable automatic shared Rules from the elevated Manager. Both Manager and the Threat Collector use `%ProgramData%\SophosSecurityAssistant\Rules`.
@@ -247,7 +249,7 @@ Requirements: Visual Studio 2026 with the .NET desktop development workload (or 
 
 ```powershell
 $env:SSA_SIGNING_CERTIFICATE_THUMBPRINT = 'CERTIFICATE_THUMBPRINT_WITHOUT_SPACES'
-build\Build-Installer.cmd -Version 1.3.87
+build\Build-Installer.cmd -Version 1.3.88
 ```
 
 The self-contained installer and versioned standalone CHM Help are written to `artifacts\setup`. With a configured code-signing certificate, the release builder signs first-party binaries and Setup with SHA-256 and timestamps them. When the project owner deliberately uses `-AllowUnsigned`, Windows may display an Unknown publisher/SmartScreen warning and that limitation must be disclosed in the GitHub Release notes. Publish Setup and Help as GitHub Release assets. See [CHANGELOG.md](CHANGELOG.md) for version history and [build/README.md](build/README.md) for certificate-store and signing details.

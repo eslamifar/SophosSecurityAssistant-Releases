@@ -12,13 +12,13 @@ Source: [github.com/eslamifar/SophosSecurityAssistant](https://github.com/eslami
 
 Manager requires Windows Administrator approval at startup. If elevation is unavailable or the UAC request is cancelled, Manager closes without opening. The independent Widget does not require elevation merely to display status.
 
-Current release: **1.3.89**
+Current release: **1.3.90**
 
 > **Sleep more peacefully at night with Sophos Security Assistant.**
 
 Supported firewall baseline: **Sophos Firewall 17.5 or later**
 
-> **Version 1.3.89 improves duplicate-safe Sophos Log Viewer CSV import by preserving event severity and requesting catch-up across every enabled automatic Rule without selecting a target Rule.** Setup verifies the collector executable, creates/configures and starts `SophosSecurityAssistantThreatCollector`, checks every Windows Service Control result, configures automatic startup on UDP 514, and adds the required Windows Firewall rule. The service keeps collecting IPS/ATP Syslog events after the desktop application is closed. See [Threat Collector setup](#threat-collector-setup) before using the Threats tab.
+> **Version 1.3.90 adds complete-day Previous/Next navigation to Threat Trends, a verified Reinstall action in About, and locks Home connection settings while a session is active.** Setup verifies the collector executable, creates/configures and starts `SophosSecurityAssistantThreatCollector`, checks every Windows Service Control result, configures automatic startup on UDP 514, and adds the required Windows Firewall rule. The service keeps collecting IPS/ATP Syslog events after the desktop application is closed. See [Threat Collector setup](#threat-collector-setup) before using the Threats tab.
 
 ## 🧭 Main workspaces
 
@@ -27,10 +27,12 @@ Supported firewall baseline: **Sophos Firewall 17.5 or later**
 - Configure the firewall host/IP, HTTPS port, username, password, group capacity, SSL verification, and inactivity timeout. The import target group is selected from the connected firewall's group list in Hosts > IPs.
 - Open the entered Sophos Web Admin address directly, before or after saving settings.
 - Verify the XML API connection and display hostname, model, negotiated API version, compatibility profile, and connected duration.
+- Keep the Home connection-settings group locked while connected; disconnect before changing the active host, credentials, capacity, timeout, or certificate setting.
 - Automatically disconnect after a configurable inactivity period.
 - Show sequential initial-load progress for Hosts, MAC/FQDN, Network, Threats, and Manage.
 - Disable operational workspaces until connection and their first successful data load; disable them again after disconnect.
 - Check GitHub for updates at startup and from About.
+- Use **Reinstall** in About to download and SHA-256 verify the latest installer again even when the installed version is already current.
 - Use the compact icon dashboard for About, Help, Widget, Web Admin, Save Settings, and Connect/Disconnect; connection, update, and initial-load messages share the dedicated status row.
 - Minimize Manager to the Windows notification area without disconnecting; double-click its tray icon or choose **Show Manager** to restore it, or choose **Exit** to close it. Launching the Manager shortcut again detects the existing elevated process before requesting UAC and restores that same window instead of starting another Manager.
 
@@ -99,7 +101,7 @@ Supported firewall baseline: **Sophos Firewall 17.5 or later**
 - In **Rules**, a green row means the enabled automatic Rule is genuinely managed by a running, configured, unpaused and recently reporting Windows service; the Automation checkbox alone does not make a row green. Add, Edit and Delete reload the persisted shared list after success.
 - Double-click an IP in a threat or membership table to view its complete stored attack history and Rule-automation activity.
 - Review All, Critical, Major, and Moderate threats over an exact From/To date-time range. **Previous day** and **Next day**, placed before From, select a complete adjacent day; Next day is disabled on today. Live resets From to today at 00:00:00 and advances To to the current time on every 5-second auto refresh, including across midnight; changing either timestamp manually preserves a fixed historical range.
-- Chart daily Critical, Major, Moderate, and other threat-event trends over an exact From/To date-time range in **Trends**. Live mode advances To to the current time every 30 seconds, while disabling it preserves a fixed historical range; click a day to display its exact severity totals and every attacking IP, then double-click an IP for its full history.
+- Chart daily Critical, Major, Moderate, and other threat-event trends over an exact From/To date-time range in **Trends**. Previous day and Next day select a complete adjacent day and Next day is disabled on today. Live mode advances To to the current time every 30 seconds, while disabling it preserves a fixed historical range; click a day to display its exact severity totals and every attacking IP, then double-click an IP for its full history.
 - View the Windows collector service state and controls in Manage > Config.
 - Verify that Sophos Log settings target this computer, use UDP 514, enable IPS/ATP forwarding, and use a severity threshold suitable for Moderate events.
 - Distinguish explicit Sophos detection severity from Syslog transport priority. Legacy IPS records use `rule_priority` when detection severity is absent; transport priority remains the final fallback.
@@ -249,7 +251,7 @@ Requirements: Visual Studio 2026 with the .NET desktop development workload (or 
 
 ```powershell
 $env:SSA_SIGNING_CERTIFICATE_THUMBPRINT = 'CERTIFICATE_THUMBPRINT_WITHOUT_SPACES'
-build\Build-Installer.cmd -Version 1.3.89
+build\Build-Installer.cmd -Version 1.3.90
 ```
 
 The self-contained installer and versioned standalone CHM Help are written to `artifacts\setup`. With a configured code-signing certificate, the release builder signs first-party binaries and Setup with SHA-256 and timestamps them. When the project owner deliberately uses `-AllowUnsigned`, Windows may display an Unknown publisher/SmartScreen warning and that limitation must be disclosed in the GitHub Release notes. Publish Setup and Help as GitHub Release assets. See [CHANGELOG.md](CHANGELOG.md) for version history and [build/README.md](build/README.md) for certificate-store and signing details.

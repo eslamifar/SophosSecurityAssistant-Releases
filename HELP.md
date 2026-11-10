@@ -4,11 +4,11 @@
   <img src="https://github.com/eslamifar/SophosSecurityAssistant-Releases/releases/latest/download/SecurityAssistantIcon.png" width="96" alt="Sophos Security Assistant icon">
 </p>
 
-Version **1.3.89** · Sophos Firewall 17.5 or later · Windows x64
+Version **1.3.90** · Sophos Firewall 17.5 or later · Windows x64
 
 > **Sleep more peacefully at night with Sophos Security Assistant.**
 
-This browser-readable guide is provided with every release so users can review the application before installing it. The GitHub Release also includes the complete searchable Microsoft Compiled HTML Help file, `SophosSecurityAssistant-Help-v1.3.89.chm`.
+This browser-readable guide is provided with every release so users can review the application before installing it. The GitHub Release also includes the complete searchable Microsoft Compiled HTML Help file, `SophosSecurityAssistant-Help-v1.3.90.chm`.
 
 ## 🧭 Contents
 
@@ -73,6 +73,8 @@ The Rules page follows the firewall position order and displays both rule groups
 The collector stores IPS/ATP events continuously even when Manager is closed. Threat tables group events by source IP and support exact From/To filtering, sortable columns, Excel-compatible export, and a Live mode that advances To every five seconds.
 
 The All, Critical, Major, and Moderate tables provide **Previous day** and **Next day** before From to select complete adjacent days; Next day is disabled on today. Separate paging controls below each table show up to 100 source IPs per page. Sorting and export still apply to the complete filtered result. If the collector was unavailable, export IPS/IDP or ATP rows as CSV from Sophos Log viewer and use **Rules > Import threat CSV**. Import validates the source, preserves each event's severity, skips events already stored through Syslog or an earlier import, and requests catch-up evaluation across every enabled automatic Rule. No target Rule is selected during import; each Rule applies its own severity criteria and target group.
+
+Threats > Trends also provides Previous day and Next day before From. They select complete adjacent days, leave Live mode, disable future navigation, and keep Next day disabled on today.
 
 Severity tabs are created dynamically. All retains the Severity column; individual severity tabs show Destination IP after Source IP. Double-click an IP to open its combined Timeline of attacks, automatic membership changes, expirations, and enforcement failures.
 
@@ -155,6 +157,8 @@ Unchanged releases use a lightweight conditional ETag request. Failed background
 
 Downloaded Setup files are SHA-256 verified. Downloads support progress, pause/resume, and cancellation. The update cache preserves the installed/current target and newest applicable previous version while cleaning older folders.
 
+Use **About > Reinstall** to download and SHA-256 verify the latest installer again when the installed version is already current. The application asks for confirmation before closing and starting Setup. Home connection settings remain locked while connected; disconnect before changing values used by the active API session.
+
 ## Troubleshooting
 
 - **No threats:** confirm the collector is Running, UDP 514 is reachable, and IPS/ATP forwarding uses a threshold that includes Moderate events.
@@ -166,5 +170,5 @@ Downloaded Setup files are SHA-256 verified. Downloads support progress, pause/r
 - **Saved secrets unavailable:** sign in with the Windows account that saved them or enter and save them again.
 - **FTP copy fails:** provide the FTP password during the current Manager session and verify the configured local folder.
 
-For searchable offline documentation, download and open `SophosSecurityAssistant-Help-v1.3.89.chm` from the Release assets.
+For searchable offline documentation, download and open `SophosSecurityAssistant-Help-v1.3.90.chm` from the Release assets.
 

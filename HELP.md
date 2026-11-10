@@ -4,11 +4,11 @@
   <img src="https://github.com/eslamifar/SophosSecurityAssistant-Releases/releases/latest/download/SecurityAssistantIcon.png" width="96" alt="Sophos Security Assistant icon">
 </p>
 
-Version **1.3.88** · Sophos Firewall 17.5 or later · Windows x64
+Version **1.3.89** · Sophos Firewall 17.5 or later · Windows x64
 
 > **Sleep more peacefully at night with Sophos Security Assistant.**
 
-This browser-readable guide is provided with every release so users can review the application before installing it. The GitHub Release also includes the complete searchable Microsoft Compiled HTML Help file, `SophosSecurityAssistant-Help-v1.3.88.chm`.
+This browser-readable guide is provided with every release so users can review the application before installing it. The GitHub Release also includes the complete searchable Microsoft Compiled HTML Help file, `SophosSecurityAssistant-Help-v1.3.89.chm`.
 
 ## 🧭 Contents
 
@@ -72,7 +72,7 @@ The Rules page follows the firewall position order and displays both rule groups
 
 The collector stores IPS/ATP events continuously even when Manager is closed. Threat tables group events by source IP and support exact From/To filtering, sortable columns, Excel-compatible export, and a Live mode that advances To every five seconds.
 
-The All, Critical, Major, and Moderate tables show up to 100 source IPs per page. Use Previous and Next to navigate; sorting and export still apply to the complete filtered result. If the collector was unavailable, export IPS/IDP or ATP rows as CSV from Sophos Log viewer and use **Rules > Import IPs to rule**. Import validates the source, skips events already stored through Syslog or an earlier import, and can preview the selected Rule when it finishes.
+The All, Critical, Major, and Moderate tables provide **Previous day** and **Next day** before From to select complete adjacent days; Next day is disabled on today. Separate paging controls below each table show up to 100 source IPs per page. Sorting and export still apply to the complete filtered result. If the collector was unavailable, export IPS/IDP or ATP rows as CSV from Sophos Log viewer and use **Rules > Import threat CSV**. Import validates the source, preserves each event's severity, skips events already stored through Syslog or an earlier import, and requests catch-up evaluation across every enabled automatic Rule. No target Rule is selected during import; each Rule applies its own severity criteria and target group.
 
 Severity tabs are created dynamically. All retains the Severity column; individual severity tabs show Destination IP after Source IP. Double-click an IP to open its combined Timeline of attacks, automatic membership changes, expirations, and enforcement failures.
 
@@ -88,7 +88,7 @@ Rules can match Critical, Major, and Moderate events by attack count and rolling
 
 In the Rules grid, green identifies an enabled automatic Rule that is genuinely managed by a running, configured, unpaused and recently reporting Windows service. Selecting Automation alone is not sufficient. After a successful Add, Edit or Delete, Manager reloads the persisted shared Rule list once so the table matches the state visible to the service.
 
-Select **Enabled** to save a Rule's state immediately, edit **Order** directly or drag rows to reorder them, and double-click a Rule row to edit it. Use **Import IPs to rule** to import duplicate-safe IPS/IDP or ATP CSV exports from Sophos Log Viewer and optionally preview the selected Rule after import.
+Select **Enabled** to save a Rule's state immediately, edit **Order** directly or drag rows to reorder them, and double-click a Rule row to edit it. Use **Import threat CSV** to import duplicate-safe IPS/IDP or ATP exports from Sophos Log Viewer. Imported events retain their severities and request catch-up across all enabled automatic Rules; each Rule uses its own criteria and target group.
 
 Use **Manage > Config > Set up automatic Rules** to save protected service credentials, configure trusted IP/CIDR exclusions, set the change-rate limit, and optionally catch up stored threats still inside Rule windows. If the main Sophos host, port, username, or password changes later, Manager keeps an action-required warning visible until **Test and enable** succeeds with the current credentials.
 
@@ -166,5 +166,5 @@ Downloaded Setup files are SHA-256 verified. Downloads support progress, pause/r
 - **Saved secrets unavailable:** sign in with the Windows account that saved them or enter and save them again.
 - **FTP copy fails:** provide the FTP password during the current Manager session and verify the configured local folder.
 
-For searchable offline documentation, download and open `SophosSecurityAssistant-Help-v1.3.88.chm` from the Release assets.
+For searchable offline documentation, download and open `SophosSecurityAssistant-Help-v1.3.89.chm` from the Release assets.
 

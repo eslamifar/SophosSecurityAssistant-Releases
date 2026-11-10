@@ -12,13 +12,13 @@ Source: [github.com/eslamifar/SophosSecurityAssistant](https://github.com/eslami
 
 Manager requires Windows Administrator approval at startup. If elevation is unavailable or the UAC request is cancelled, Manager closes without opening. The independent Widget does not require elevation merely to display status.
 
-Current release: **1.3.88**
+Current release: **1.3.89**
 
 > **Sleep more peacefully at night with Sophos Security Assistant.**
 
 Supported firewall baseline: **Sophos Firewall 17.5 or later**
 
-> **Version 1.3.88 includes a Windows service for threat logs, optional rule automation, duplicate-safe Sophos Log Viewer CSV import, paged Threat tables, and consent-based privacy-protected diagnostic delivery.** Setup verifies the collector executable, creates/configures and starts `SophosSecurityAssistantThreatCollector`, checks every Windows Service Control result, configures automatic startup on UDP 514, and adds the required Windows Firewall rule. The service keeps collecting IPS/ATP Syslog events after the desktop application is closed. See [Threat Collector setup](#threat-collector-setup) before using the Threats tab.
+> **Version 1.3.89 improves duplicate-safe Sophos Log Viewer CSV import by preserving event severity and requesting catch-up across every enabled automatic Rule without selecting a target Rule.** Setup verifies the collector executable, creates/configures and starts `SophosSecurityAssistantThreatCollector`, checks every Windows Service Control result, configures automatic startup on UDP 514, and adds the required Windows Firewall rule. The service keeps collecting IPS/ATP Syslog events after the desktop application is closed. See [Threat Collector setup](#threat-collector-setup) before using the Threats tab.
 
 ## 🧭 Main workspaces
 
@@ -98,7 +98,7 @@ Supported firewall baseline: **Sophos Firewall 17.5 or later**
 - Review current timed Rule memberships, upcoming expirations, overdue entries, and recent expiration outcomes in **Expirations**, which reloads shared Rule state every 60 seconds while visible.
 - In **Rules**, a green row means the enabled automatic Rule is genuinely managed by a running, configured, unpaused and recently reporting Windows service; the Automation checkbox alone does not make a row green. Add, Edit and Delete reload the persisted shared list after success.
 - Double-click an IP in a threat or membership table to view its complete stored attack history and Rule-automation activity.
-- Review All, Critical, Major, and Moderate threats over an exact From/To date-time range. Live mode advances To to the current time on every 5-second auto refresh; changing To manually preserves a fixed historical range.
+- Review All, Critical, Major, and Moderate threats over an exact From/To date-time range. **Previous day** and **Next day**, placed before From, select a complete adjacent day; Next day is disabled on today. Live resets From to today at 00:00:00 and advances To to the current time on every 5-second auto refresh, including across midnight; changing either timestamp manually preserves a fixed historical range.
 - Chart daily Critical, Major, Moderate, and other threat-event trends over an exact From/To date-time range in **Trends**. Live mode advances To to the current time every 30 seconds, while disabling it preserves a fixed historical range; click a day to display its exact severity totals and every attacking IP, then double-click an IP for its full history.
 - View the Windows collector service state and controls in Manage > Config.
 - Verify that Sophos Log settings target this computer, use UDP 514, enable IPS/ATP forwarding, and use a severity threshold suitable for Moderate events.
@@ -121,7 +121,7 @@ Important behavior:
 
 - The Sophos Reports page reads historical data stored on the firewall; the collector only receives events forwarded after Syslog was configured and the service was running.
 - Existing historical report rows cannot be backfilled through Syslog.
-- Export IPS/IDP or ATP rows from Sophos **Log viewer** as CSV, then use **Threats > Rules > Import IPs to rule** to backfill local Threat history. The importer validates rows, skips duplicates, reports rejected rows, and can immediately preview the selected Rule against the imported events.
+- Export IPS/IDP or ATP rows from Sophos **Log viewer** as CSV, then use **Threats > Rules > Import threat CSV** to backfill local Threat history. The importer validates rows, preserves each event's severity, skips duplicates, reports rejected rows, and requests a catch-up evaluation across every enabled automatic Rule. Each Rule continues to use its own severity criteria and target group.
 - Firewall, web, antivirus, and other non-IPS/ATP messages may be received but are counted as non-threat logs and are not added to the Threat IP table.
 - Threat data is stored at `%ProgramData%\SophosSecurityAssistant\Threats\threats.jsonl`.
 - Collector diagnostics are stored in the same Threats directory; limited rejected-message samples are written under `%ProgramData%\SophosSecurityAssistant\Logs`.
@@ -158,7 +158,7 @@ Important behavior:
 - Optionally run enabled rules automatically in the Windows service whenever a matching-severity threat arrives.
 - Keep one effective automatic severity per IP: higher-severity matches promote the IP and remove lower-severity group memberships, lower-severity matches cannot downgrade it, and stronger same-group Rules may extend but never shorten its expiration.
 - Auto-refresh Threats Logs every 60 seconds while visible; Live mode advances To to the current time, while disabling it preserves a fixed historical range.
-- Browse All, Critical, Major, and Moderate threat tables in pages of 100 source IPs using Previous and Next; sorting is applied to the full result set and Export includes every row, not only the visible page.
+- Browse All, Critical, Major, and Moderate threat tables in pages of 100 source IPs using the separate Previous and Next controls below the table; sorting is applied to the full result set and Export includes every row, not only the visible page.
 - Use **Manage > Config > Set up automatic Rules** for an administrator-approved connection test and protected service-credential setup. The form supports an IPv4/CIDR allowlist, per-minute change limit, and optional catch-up evaluation of stored threats within Rule windows. If the main Sophos host, port, username, or password changes after automation is configured, Manager shows a persistent action-required warning until **Test and enable** succeeds with the current credentials.
 - Max changes / minute delays excess queued additions until the next minute; the IP/CIDR allowlist excludes trusted addresses and networks; stored-threat catch-up is a one-time evaluation of events still inside enabled Rule windows.
 - Create, edit, preview, manually apply, and enable automatic shared Rules from the elevated Manager. Both Manager and the Threat Collector use `%ProgramData%\SophosSecurityAssistant\Rules`.
@@ -249,7 +249,7 @@ Requirements: Visual Studio 2026 with the .NET desktop development workload (or 
 
 ```powershell
 $env:SSA_SIGNING_CERTIFICATE_THUMBPRINT = 'CERTIFICATE_THUMBPRINT_WITHOUT_SPACES'
-build\Build-Installer.cmd -Version 1.3.88
+build\Build-Installer.cmd -Version 1.3.89
 ```
 
 The self-contained installer and versioned standalone CHM Help are written to `artifacts\setup`. With a configured code-signing certificate, the release builder signs first-party binaries and Setup with SHA-256 and timestamps them. When the project owner deliberately uses `-AllowUnsigned`, Windows may display an Unknown publisher/SmartScreen warning and that limitation must be disclosed in the GitHub Release notes. Publish Setup and Help as GitHub Release assets. See [CHANGELOG.md](CHANGELOG.md) for version history and [build/README.md](build/README.md) for certificate-store and signing details.

@@ -12,13 +12,13 @@ Source: [github.com/eslamifar/SophosSecurityAssistant](https://github.com/eslami
 
 Manager requires Windows Administrator approval at startup. If elevation is unavailable or the UAC request is cancelled, Manager closes without opening. The independent Widget does not require elevation merely to display status.
 
-Current release: **1.3.86**
+Current release: **1.3.87**
 
 > **Sleep more peacefully at night with Sophos Security Assistant.**
 
 Supported firewall baseline: **Sophos Firewall 17.5 or later**
 
-> **Version 1.3.86 includes a Windows service for threat logs, optional rule automation, and consent-based privacy-protected diagnostic delivery.** Setup creates and starts `SophosSecurityAssistantThreatCollector`, configures it for automatic startup on UDP 514, and adds the required Windows Firewall rule. The service keeps collecting IPS/ATP Syslog events after the desktop application is closed. See [Threat Collector setup](#threat-collector-setup) before using the Threats tab.
+> **Version 1.3.87 includes a Windows service for threat logs, optional rule automation, and consent-based privacy-protected diagnostic delivery.** Setup verifies the collector executable, creates/configures and starts `SophosSecurityAssistantThreatCollector`, checks every Windows Service Control result, configures automatic startup on UDP 514, and adds the required Windows Firewall rule. The service keeps collecting IPS/ATP Syslog events after the desktop application is closed. See [Threat Collector setup](#threat-collector-setup) before using the Threats tab.
 
 ## 🧭 Main workspaces
 
@@ -225,7 +225,7 @@ Important behavior:
 - If in-app download or verification fails, the direct HTTPS release link is shown for browser download.
 - When closing normally with Alt+F4 or the Close button, the application clears its connection state first. The Threat Collector service continues running.
 
-For upgrades, close Manager and Widget, run the new Setup as Administrator, and keep the existing installation directory. Before replacing files, Setup must stop the installed Threat Collector and waits for it to finish; the upgrade is aborted if a safe stop cannot be confirmed. Setup then replaces and reconfigures the service for Automatic startup, restores the UDP 514 firewall rule, and starts the new service. After Setup completes, open Threats and confirm the collector reports Running.
+For upgrades, close Manager and Widget, run the new Setup as Administrator, and keep the existing installation directory. Before replacing files, Setup must stop the installed Threat Collector and waits for it to finish; the upgrade is aborted if a safe stop cannot be confirmed. Setup then validates the copied collector executable, creates or reconfigures the service for Automatic startup, checks each Windows Service Control result, restores the UDP 514 firewall rule, and starts the new service. Setup logging is enabled. If Windows reports service-control error 1072, close Services, Task Manager, and all Sophos Security Assistant windows and retry; restart Windows if the service remains marked for deletion. After Setup completes, open Threats and confirm the collector reports Running.
 
 ## Requirements and initial configuration
 
@@ -247,7 +247,7 @@ Requirements: Visual Studio 2026 with the .NET desktop development workload (or 
 
 ```powershell
 $env:SSA_SIGNING_CERTIFICATE_THUMBPRINT = 'CERTIFICATE_THUMBPRINT_WITHOUT_SPACES'
-build\Build-Installer.cmd -Version 1.3.86
+build\Build-Installer.cmd -Version 1.3.87
 ```
 
 The self-contained installer and versioned standalone CHM Help are written to `artifacts\setup`. With a configured code-signing certificate, the release builder signs first-party binaries and Setup with SHA-256 and timestamps them. When the project owner deliberately uses `-AllowUnsigned`, Windows may display an Unknown publisher/SmartScreen warning and that limitation must be disclosed in the GitHub Release notes. Publish Setup and Help as GitHub Release assets. See [CHANGELOG.md](CHANGELOG.md) for version history and [build/README.md](build/README.md) for certificate-store and signing details.

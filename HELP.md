@@ -4,11 +4,11 @@
   <img src="https://github.com/eslamifar/SophosSecurityAssistant-Releases/releases/latest/download/SecurityAssistantIcon.png" width="96" alt="Sophos Security Assistant icon">
 </p>
 
-Version **1.3.86** · Sophos Firewall 17.5 or later · Windows x64
+Version **1.3.87** · Sophos Firewall 17.5 or later · Windows x64
 
 > **Sleep more peacefully at night with Sophos Security Assistant.**
 
-This browser-readable guide is provided with every release so users can review the application before installing it. The GitHub Release also includes the complete searchable Microsoft Compiled HTML Help file, `SophosSecurityAssistant-Help-v1.3.86.chm`.
+This browser-readable guide is provided with every release so users can review the application before installing it. The GitHub Release also includes the complete searchable Microsoft Compiled HTML Help file, `SophosSecurityAssistant-Help-v1.3.87.chm`.
 
 ## 🧭 Contents
 
@@ -30,7 +30,7 @@ This browser-readable guide is provided with every release so users can review t
 - Administrator approval is required when Manager starts and for installation or service control.
 - Sophos Firewall 17.5 or later with XML API enabled and the Manager computer's IP allowed.
 - UDP 514 Syslog forwarding is required for Threats. Forward IPS/ATP and Firewall events.
-- Setup installs and starts the `SophosSecurityAssistantThreatCollector` Windows service and creates its Windows Firewall rule.
+- Setup validates the collector executable, creates/configures and starts `SophosSecurityAssistantThreatCollector`, checks every Windows Service Control result, and creates its Windows Firewall rule. Setup logging is enabled for installation diagnostics.
 - Upgrades preserve user settings and stop Manager, Widget, and the collector safely before replacing files.
 
 ⬇️ Download the latest Setup and standalone CHM from the **[latest GitHub Release](https://github.com/eslamifar/SophosSecurityAssistant-Releases/releases/latest)**.
@@ -157,9 +157,10 @@ Downloaded Setup files are SHA-256 verified. Downloads support progress, pause/r
 - **No enforcement verification:** enable Firewall logs for the SSM Syslog destination.
 - **IP remains able to access a published service:** add all Hacker groups to the Business Application rule's Blocked client networks, then review Configuration Audit and Timeline.
 - **Automatic Rules do not run:** repeat automatic Rule setup, verify protected service credentials, confirm the service is running, and inspect Threats > Logs.
+- **Setup reports Windows service-control error 1072:** close Services, Task Manager, and every Sophos Security Assistant window, then retry Setup. Restart Windows if the Threat Collector remains marked for deletion.
 - **Update check fails:** verify Windows date/time, DNS, HTTPS access to GitHub, proxy/VPN, and TLS inspection.
 - **Saved secrets unavailable:** sign in with the Windows account that saved them or enter and save them again.
 - **FTP copy fails:** provide the FTP password during the current Manager session and verify the configured local folder.
 
-For searchable offline documentation, download and open `SophosSecurityAssistant-Help-v1.3.86.chm` from the Release assets.
+For searchable offline documentation, download and open `SophosSecurityAssistant-Help-v1.3.87.chm` from the Release assets.
 

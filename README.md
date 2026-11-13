@@ -6,7 +6,7 @@
 
 Sophos Security Assistant is a Windows x64 desktop application for managing supported Sophos Firewall features through the XML API. It combines host/group workflows, network configuration, backup settings, application logging, automatic updates, continuous IPS/ATP Syslog collection, and an optional standalone desktop status widget.
 
-Source: [github.com/eslamifar/SophosSecurityAssistant](https://github.com/eslamifar/SophosSecurityAssistant) 
+Source: [github.com/eslamifar/SophosSecurityAssistant](https://github.com/eslamifar/SophosSecurityAssistant) <br />
 Releases: [github.com/eslamifar/SophosSecurityAssistant-Releases](https://github.com/eslamifar/SophosSecurityAssistant-Releases)
 
 ⬇️ Download: **[Latest Sophos Security Assistant release](https://github.com/eslamifar/SophosSecurityAssistant-Releases/releases/latest)**

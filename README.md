@@ -13,13 +13,13 @@ Releases: [github.com/eslamifar/SophosSecurityAssistant-Releases](https://github
 
 Manager requires Windows Administrator approval at startup. If elevation is unavailable or the UAC request is cancelled, Manager closes without opening. The independent Widget does not require elevation merely to display status.
 
-Current release: **1.3.93**
+Current release: **1.3.94**
 
 > **Sleep more peacefully at night with Sophos Security Assistant.**
 
 Supported firewall baseline: **Sophos Firewall 17.5 or later**
 
-> **Version 1.3.93 consolidates the audited product changes and keeps privacy-protected diagnostic reporting exclusively in Manage > Config.** Setup verifies the collector executable, creates/configures and starts `SophosSecurityAssistantThreatCollector`, checks every Windows Service Control result, configures automatic startup on UDP 514, and adds the required Windows Firewall rule. The service keeps collecting IPS/ATP Syslog events after the desktop application is closed. See [Threat Collector setup](#threat-collector-setup) before using the Threats tab.
+> **Version 1.3.94 adds persisted Sophos System Health performance monitoring while retaining the audited privacy, Rule-management, update, and service contracts from 1.3.93.** Setup verifies the collector executable, creates/configures and starts `SophosSecurityAssistantThreatCollector`, checks every Windows Service Control result, configures automatic startup on UDP 514, and adds the required Windows Firewall rule. The service keeps collecting IPS/ATP and System Health Syslog events after the desktop application is closed. See [Threat Collector setup](#threat-collector-setup) before using the Threats tab.
 
 ## 🧭 Main workspaces
 
@@ -28,6 +28,7 @@ Supported firewall baseline: **Sophos Firewall 17.5 or later**
 - Configure the firewall host/IP, HTTPS port, username, password, group capacity, SSL verification, and inactivity timeout. The import target group is selected from the connected firewall's group list in Hosts > IPs.
 - Open the entered Sophos Web Admin address directly, before or after saving settings.
 - Verify the XML API connection and display hostname, model, negotiated API version, compatibility profile, and connected duration.
+- After connecting, open **Home > Information** to review firewall identity plus the latest CPU, memory, disk, and per-interface performance received from Sophos System Health Syslog. Performance refreshes every minute and clearly reports missing or stale data.
 - Keep the Home connection-settings group locked while connected; disconnect before changing the active host, credentials, capacity, timeout, or certificate setting.
 - Automatically disconnect after a configurable inactivity period.
 - Show sequential initial-load progress for Hosts, MAC/FQDN, Network, Threats, and Manage.
@@ -104,7 +105,7 @@ Supported firewall baseline: **Sophos Firewall 17.5 or later**
 - Review All, Critical, Major, and Moderate threats over an exact From/To date-time range. **Previous day** and **Next day**, placed before From, select a complete adjacent day; Next day is disabled on today. Live resets From to today at 00:00:00 and advances To to the current time on every 5-second auto refresh, including across midnight; changing either timestamp manually preserves a fixed historical range.
 - Chart daily Critical, Major, Moderate, and other threat-event trends over an exact From/To date-time range in **Trends**. Previous day and Next day select a complete adjacent day and Next day is disabled on today. Live mode advances To to the current time every 30 seconds, while disabling it preserves a fixed historical range; click a day to display its exact severity totals and every attacking IP, then double-click an IP for its full history.
 - View the Windows collector service state and controls in Manage > Config.
-- Verify that Sophos Log settings target this computer, use UDP 514, enable IPS/ATP forwarding, and use a severity threshold suitable for Moderate events.
+- Verify that Sophos Log settings target this computer, use UDP 514, enable IPS/ATP, Firewall, and System Health forwarding, and use a severity threshold suitable for Moderate events.
 - Distinguish explicit Sophos detection severity from Syslog transport priority. Legacy IPS records use `rule_priority` when detection severity is absent; transport priority remains the final fallback.
 - Report received, stored, non-threat, missing-source, unknown-severity, and other rejected message counts, plus total stored events, unique source IPs, current-service accepted events, and last packet/threat times.
 
@@ -252,7 +253,7 @@ Requirements: Visual Studio 2026 with the .NET desktop development workload (or 
 
 ```powershell
 $env:SSA_SIGNING_CERTIFICATE_THUMBPRINT = 'CERTIFICATE_THUMBPRINT_WITHOUT_SPACES'
-build\Build-Installer.cmd -Version 1.3.93
+build\Build-Installer.cmd -Version 1.3.94
 ```
 
 The self-contained installer and versioned standalone CHM Help are written to `artifacts\setup`. With a configured code-signing certificate, the release builder signs first-party binaries and Setup with SHA-256 and timestamps them. When the project owner deliberately uses `-AllowUnsigned`, Windows may display an Unknown publisher/SmartScreen warning and that limitation must be disclosed in the GitHub Release notes. Publish Setup and Help as GitHub Release assets. See [CHANGELOG.md](CHANGELOG.md) for version history and [build/README.md](build/README.md) for certificate-store and signing details.

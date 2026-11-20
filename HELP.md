@@ -4,11 +4,11 @@
   <img src="https://github.com/eslamifar/SophosSecurityAssistant-Releases/releases/latest/download/SecurityAssistantIcon.png" width="96" alt="Sophos Security Assistant icon">
 </p>
 
-Version **1.3.93** · Sophos Firewall 17.5 or later · Windows x64
+Version **1.3.94** · Sophos Firewall 17.5 or later · Windows x64
 
 > **Sleep more peacefully at night with Sophos Security Assistant.**
 
-This browser-readable guide is provided with every release so users can review the application before installing it. The GitHub Release also includes the complete searchable Microsoft Compiled HTML Help file, `SophosSecurityAssistant-Help-v1.3.93.chm`.
+This browser-readable guide is provided with every release so users can review the application before installing it. The GitHub Release also includes the complete searchable Microsoft Compiled HTML Help file, `SophosSecurityAssistant-Help-v1.3.94.chm`.
 
 ## 🧭 Contents
 
@@ -29,7 +29,7 @@ This browser-readable guide is provided with every release so users can review t
 - Windows 10 or Windows 11 x64.
 - Administrator approval is required when Manager starts and for installation or service control.
 - Sophos Firewall 17.5 or later with XML API enabled and the Manager computer's IP allowed.
-- UDP 514 Syslog forwarding is required for Threats. Forward IPS/ATP and Firewall events.
+- UDP 514 Syslog forwarding is required for Threats and performance monitoring. Forward IPS/ATP, Firewall, and System Health events.
 - Setup validates the collector executable, creates/configures and starts `SophosSecurityAssistantThreatCollector`, checks every Windows Service Control result, and creates its Windows Firewall rule. Setup logging is enabled for installation diagnostics.
 - Upgrades preserve user settings and stop Manager, Widget, and the collector safely before replacing files.
 
@@ -42,6 +42,8 @@ Enter the Sophos host/IP address, HTTPS port, XML API username and password, opt
 Password and REST API key values are protected with Windows DPAPI for the current Windows user and are not stored as plain text. Existing legacy plain-text settings are migrated automatically.
 
 Manager tests compatibility after connection and enables supported management areas. The optional REST key is used only for the official SFOS 22 REST capability probe; the primary management workflow uses XML API.
+
+After connecting, **Home > Information** shows firewall identity and the latest CPU, memory, disk, and per-interface performance received from Sophos System Health Syslog. The collector persists these records while Manager is closed; Manager refreshes the view every minute and marks data older than five minutes as stale. If no data appears, enable Sophos System Health Usage logging to this computer on UDP 514.
 
 ## Hosts
 
@@ -170,5 +172,5 @@ Use **About > Reinstall** to download and SHA-256 verify the latest installer ag
 - **Saved secrets unavailable:** sign in with the Windows account that saved them or enter and save them again.
 - **FTP copy fails:** provide the FTP password during the current Manager session and verify the configured local folder.
 
-For searchable offline documentation, download and open `SophosSecurityAssistant-Help-v1.3.93.chm` from the Release assets.
+For searchable offline documentation, download and open `SophosSecurityAssistant-Help-v1.3.94.chm` from the Release assets.
 

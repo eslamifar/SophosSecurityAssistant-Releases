@@ -4,11 +4,11 @@
   <img src="https://github.com/eslamifar/SophosSecurityAssistant-Releases/releases/latest/download/SecurityAssistantIcon.png" width="96" alt="Sophos Security Assistant icon">
 </p>
 
-Version **1.3.94** · Sophos Firewall 17.5 or later · Windows x64
+Version **1.3.95** · Sophos Firewall 17.5 or later · Windows x64
 
 > **Sleep more peacefully at night with Sophos Security Assistant.**
 
-This browser-readable guide is provided with every release so users can review the application before installing it. The GitHub Release also includes the complete searchable Microsoft Compiled HTML Help file, `SophosSecurityAssistant-Help-v1.3.94.chm`.
+This browser-readable guide is provided with every release so users can review the application before installing it. The GitHub Release also includes the complete searchable Microsoft Compiled HTML Help file, `SophosSecurityAssistant-Help-v1.3.95.chm`.
 
 ## 🧭 Contents
 
@@ -145,7 +145,7 @@ Use Manage > Config to retain 14, 30, 60, 90, 120, 180, 270, or 365 days.
 
 ## Desktop Widget
 
-The independent Widget shows Manager connection state, gateway health, the latest backup, and threat/collector status. Its cards open Manager at the related workspace. Closing Manager does not close the Widget or stop the collector service.
+The independent Widget shows Manager connection state, gateway health, the latest backup, and threat/collector status. The Threats card also checks the automatic Rule heartbeat and reports a stopped collector, unavailable or stale Rule status, missing credentials, paused automation, failures, or no enabled automatic Rules. A changed failure condition produces one Windows notification instead of repeating every refresh. Its cards open Manager at the related workspace. Closing Manager does not close the Widget or stop the collector service.
 
 ## Updates
 
@@ -172,5 +172,5 @@ Use **About > Reinstall** to download and SHA-256 verify the latest installer ag
 - **Saved secrets unavailable:** sign in with the Windows account that saved them or enter and save them again.
 - **FTP copy fails:** provide the FTP password during the current Manager session and verify the configured local folder.
 
-For searchable offline documentation, download and open `SophosSecurityAssistant-Help-v1.3.94.chm` from the Release assets.
+For searchable offline documentation, download and open `SophosSecurityAssistant-Help-v1.3.95.chm` from the Release assets.
 

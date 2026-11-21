@@ -1,5 +1,37 @@
 # Changelog
 
+## 1.3.95 - 2026-11-21
+
+### Added
+
+- Add an independent automatic Rule heartbeat so Manager and Widget can detect a stopped automation worker even when the Windows service remains running.
+- Add red Widget states and deduplicated Windows notifications for a stopped collector, stale or unavailable Rule status, missing credentials, paused automation, consecutive failures, and no enabled automatic Rules.
+- Configure Windows service recovery to restart the Threat Collector after unexpected failures.
+
+### Changed
+
+- Send the separately enabled Rule-failure email for each failed automation attempt, while still pausing automation after three consecutive failures.
+- Keep the collector service alive when its Rule worker exits unexpectedly so the stale heartbeat is visible and a critical service/Rule alert can be attempted.
+- Place application-log retention and **Save config** on one aligned row and increase the Home performance action row so Refresh is not clipped.
+
+### Fixed
+
+- Distinguish a healthy Windows service from an unresponsive automatic Rule worker in the Widget.
+- Prevent unchanged Rule-engine alerts from producing a notification every ten-second Widget refresh.
+
+### Security
+
+- Retain the privacy contract: diagnostic reporting remains only in **Manage > Config**, transport credentials remain hidden, and consent, sanitization, and temporary-file cleanup remain enforced.
+
+### Documentation
+
+- Document automatic Rule heartbeat monitoring, Widget failure states, service recovery, Rule-failure email behavior, and the continued experimental status of **Network > Rules**.
+
+### Known limitations
+
+- **Network > Rules** remains experimental across SFOS versions; verify detected rule types and values before applying changes.
+- Widget automation health depends on the shared public heartbeat written by the Threat Collector and reports it as stale after 45 seconds without an update.
+
 ## 1.3.94 - 2026-11-20
 
 ### Added

@@ -6,20 +6,19 @@
 
 Sophos Security Assistant is a Windows x64 desktop application for managing supported Sophos Firewall features through the XML API. It combines host/group workflows, network configuration, backup settings, application logging, automatic updates, continuous IPS/ATP Syslog collection, and an optional standalone desktop status widget.
 
-Source: [github.com/eslamifar/SophosSecurityAssistant](https://github.com/eslamifar/SophosSecurityAssistant) <br />
-Releases: [github.com/eslamifar/SophosSecurityAssistant-Releases](https://github.com/eslamifar/SophosSecurityAssistant-Releases)
+Source: [github.com/eslamifar/SophosSecurityAssistant](https://github.com/eslamifar/SophosSecurityAssistant) · Releases: [github.com/eslamifar/SophosSecurityAssistant-Releases](https://github.com/eslamifar/SophosSecurityAssistant-Releases)
 
 ⬇️ Download: **[Latest Sophos Security Assistant release](https://github.com/eslamifar/SophosSecurityAssistant-Releases/releases/latest)**
 
 Manager requires Windows Administrator approval at startup. If elevation is unavailable or the UAC request is cancelled, Manager closes without opening. The independent Widget does not require elevation merely to display status.
 
-Current release: **1.3.94**
+Current release: **1.3.95**
 
 > **Sleep more peacefully at night with Sophos Security Assistant.**
 
 Supported firewall baseline: **Sophos Firewall 17.5 or later**
 
-> **Version 1.3.94 adds persisted Sophos System Health performance monitoring while retaining the audited privacy, Rule-management, update, and service contracts from 1.3.93.** Setup verifies the collector executable, creates/configures and starts `SophosSecurityAssistantThreatCollector`, checks every Windows Service Control result, configures automatic startup on UDP 514, and adds the required Windows Firewall rule. The service keeps collecting IPS/ATP and System Health Syslog events after the desktop application is closed. See [Threat Collector setup](#threat-collector-setup) before using the Threats tab.
+> **Version 1.3.95 improves automatic Rule failure visibility and collector recovery while retaining the performance, privacy, update, and service contracts from 1.3.94.** Setup configures verified Windows service recovery in addition to automatic startup and UDP 514 access. The Widget distinguishes a running collector from a stale, paused, unconfigured, or failing Rule engine and displays a Windows notification when attention is required.
 
 ## 🧭 Main workspaces
 
@@ -100,7 +99,7 @@ Supported firewall baseline: **Sophos Firewall 17.5 or later**
 - Follow per-IP group-addition progress and cancel remaining operations after the current request finishes.
 - Use the first Target group entry as an explicit selection prompt; adding selected IPs is blocked until a real Sophos group is selected.
 - Review current timed Rule memberships, upcoming expirations, overdue entries, and recent expiration outcomes in **Expirations**, which reloads shared Rule state every 60 seconds while visible.
-- In **Rules**, a green row means the enabled automatic Rule is genuinely managed by a running, configured, unpaused and recently reporting Windows service; the Automation checkbox alone does not make a row green. Add, Edit and Delete reload the persisted shared list after success.
+- In **Rules**, a green row means the enabled automatic Rule is genuinely managed by a running, configured, unpaused and recently reporting Windows service; the Automation checkbox alone does not make a row green. Add, Edit and Delete reload the persisted shared list after success. Each failure can trigger the separately configured Rule-failure email, and three consecutive failures pause automation.
 - Double-click an IP in a threat or membership table to view its complete stored attack history and Rule-automation activity.
 - Review All, Critical, Major, and Moderate threats over an exact From/To date-time range. **Previous day** and **Next day**, placed before From, select a complete adjacent day; Next day is disabled on today. Live resets From to today at 00:00:00 and advances To to the current time on every 5-second auto refresh, including across midnight; changing either timestamp manually preserves a fixed historical range.
 - Chart daily Critical, Major, Moderate, and other threat-event trends over an exact From/To date-time range in **Trends**. Previous day and Next day select a complete adjacent day and Next day is disabled on today. Live mode advances To to the current time every 30 seconds, while disabling it preserves a fixed historical range; click a day to display its exact severity totals and every attacking IP, then double-click an IP for its full history.
@@ -111,7 +110,7 @@ Supported firewall baseline: **Sophos Firewall 17.5 or later**
 
 #### Threat Collector setup
 
-The installer creates the `SophosSecurityAssistantThreatCollector` Windows service, starts it automatically, and adds a Windows Firewall inbound rule for UDP 514. The service continues collecting while the desktop application is closed.
+The installer creates the `SophosSecurityAssistantThreatCollector` Windows service, starts it automatically, adds a Windows Firewall inbound rule for UDP 514, and configures restart recovery after unexpected service failures. The service continues collecting while the desktop application is closed. A separate automation heartbeat lets Manager and Widget detect a stopped Rule worker even when the Windows service itself is still running.
 
 In Sophos Web Admin:
 
@@ -200,7 +199,7 @@ Important behavior:
 
 - Run as an independent process from the main `SophosSecurityAssistant.UI.exe --widget` executable; closing Manager does not close the Widget.
 - Show Manager connection heartbeat, gateway health, latest successful in-app backup and its type, and the number of threats received during the current local calendar day in a shorter four-card layout.
-- Integrate Threat Collector health into the Threats card; when the service is stopped, show **Service is not running** in red instead of a threat count.
+- Integrate Threat Collector and automatic Rule-engine health into the Threats card. Show a red actionable state for a stopped collector, unavailable or stale Rule status, missing Rule credentials, paused automation, consecutive failures, or no enabled automatic Rules, and show a deduplicated Windows notification when the condition changes.
 - Highlight disconnected gateways, notify when a gateway newly needs attention, and make every status card open Manager directly at Home, Network > Gateways, Manage > Backup / Restore, or Threats as appropriate. Opening Threats from the Widget selects today from 00:00:00 through 23:59:59 and runs Refresh.
 - Color the latest backup green up to 10 days old, amber from more than 10 through 30 days, and red when older or unavailable.
 - Refresh status every 10 seconds and show a Windows notification when a new threat arrives after the Widget starts.
@@ -253,7 +252,7 @@ Requirements: Visual Studio 2026 with the .NET desktop development workload (or 
 
 ```powershell
 $env:SSA_SIGNING_CERTIFICATE_THUMBPRINT = 'CERTIFICATE_THUMBPRINT_WITHOUT_SPACES'
-build\Build-Installer.cmd -Version 1.3.94
+build\Build-Installer.cmd -Version 1.3.95
 ```
 
 The self-contained installer and versioned standalone CHM Help are written to `artifacts\setup`. With a configured code-signing certificate, the release builder signs first-party binaries and Setup with SHA-256 and timestamps them. When the project owner deliberately uses `-AllowUnsigned`, Windows may display an Unknown publisher/SmartScreen warning and that limitation must be disclosed in the GitHub Release notes. Publish Setup and Help as GitHub Release assets. See [CHANGELOG.md](CHANGELOG.md) for version history and [build/README.md](build/README.md) for certificate-store and signing details.

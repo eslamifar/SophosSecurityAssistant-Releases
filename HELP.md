@@ -4,11 +4,11 @@
   <img src="https://github.com/eslamifar/SophosSecurityAssistant-Releases/releases/latest/download/SecurityAssistantIcon.png" width="96" alt="Sophos Security Assistant icon">
 </p>
 
-Version **1.3.95** · Sophos Firewall 17.5 or later · Windows x64
+Version **1.3.96** · Sophos Firewall 17.5 or later · Windows x64
 
 > **Sleep more peacefully at night with Sophos Security Assistant.**
 
-This browser-readable guide is provided with every release so users can review the application before installing it. The GitHub Release also includes the complete searchable Microsoft Compiled HTML Help file, `SophosSecurityAssistant-Help-v1.3.95.chm`.
+This browser-readable guide is provided with every release so users can review the application before installing it. The GitHub Release also includes the complete searchable Microsoft Compiled HTML Help file, `SophosSecurityAssistant-Help-v1.3.96.chm`.
 
 ## 🧭 Contents
 
@@ -43,7 +43,7 @@ Password and REST API key values are protected with Windows DPAPI for the curren
 
 Manager tests compatibility after connection and enables supported management areas. The optional REST key is used only for the official SFOS 22 REST capability probe; the primary management workflow uses XML API.
 
-After connecting, **Home > Information** shows firewall identity and the latest CPU, memory, disk, and per-interface performance received from Sophos System Health Syslog. The collector persists these records while Manager is closed; Manager refreshes the view every minute and marks data older than five minutes as stale. If no data appears, enable Sophos System Health Usage logging to this computer on UDP 514.
+After connecting, **Home > Information** shows firewall identity and the latest CPU, memory, disk, and per-interface performance received from Sophos System Health Syslog. The collector persists these records while Manager is closed; Manager refreshes the view every minute and marks data older than five minutes as stale. Two consecutive high or critical CPU, memory, or disk samples trigger one Windows notification; a healthy sample resets the alert state. If no data appears, enable Sophos System Health Usage logging to this computer on UDP 514.
 
 ## Hosts
 
@@ -90,7 +90,7 @@ Rules can match Critical, Major, and Moderate events by attack count and rolling
 - retain host objects after expiry;
 - record automatic additions in severity CSV archives.
 
-In the Rules grid, green identifies an enabled automatic Rule that is genuinely managed by a running, configured, unpaused and recently reporting Windows service. Selecting Automation alone is not sufficient. After a successful Add, Edit or Delete, Manager reloads the persisted shared Rule list once so the table matches the state visible to the service.
+In the Rules grid, green identifies an enabled automatic Rule that is genuinely managed by a running, configured, unpaused and recently reporting Windows service. Selecting Automation alone is not sufficient. After a successful Add, Edit, Delete, Enable or Disable, Manager reloads the persisted shared Rule list once so the table matches the state visible to the service. Three consecutive failures pause automation; the service then tests the Sophos connection with bounded backoff and automatically resumes and requests catch-up evaluation after recovery.
 
 Select **Enabled** to save a Rule's state immediately, edit **Order** directly or drag rows to reorder them, and double-click a Rule row to edit it. Use **Import threat CSV** to import duplicate-safe IPS/IDP or ATP exports from Sophos Log Viewer. Imported events retain their severities and request catch-up across all enabled automatic Rules; each Rule uses its own criteria and target group.
 
@@ -145,7 +145,7 @@ Use Manage > Config to retain 14, 30, 60, 90, 120, 180, 270, or 365 days.
 
 ## Desktop Widget
 
-The independent Widget shows Manager connection state, gateway health, the latest backup, and threat/collector status. The Threats card also checks the automatic Rule heartbeat and reports a stopped collector, unavailable or stale Rule status, missing credentials, paused automation, failures, or no enabled automatic Rules. A changed failure condition produces one Windows notification instead of repeating every refresh. Its cards open Manager at the related workspace. Closing Manager does not close the Widget or stop the collector service.
+The independent Widget shows Manager connection state, gateway health, the latest backup, and threat/collector status. The Threats card also checks the automatic Rule heartbeat and reports a stopped collector, unavailable or stale Rule status, missing credentials, paused automation, failures, or no enabled automatic Rules. During recovery it shows the next retry countdown. A changed failure condition produces one Windows notification instead of repeating every refresh. Its cards open Manager at the related workspace. Closing Manager does not close the Widget or stop the collector service.
 
 ## Updates
 
@@ -172,5 +172,5 @@ Use **About > Reinstall** to download and SHA-256 verify the latest installer ag
 - **Saved secrets unavailable:** sign in with the Windows account that saved them or enter and save them again.
 - **FTP copy fails:** provide the FTP password during the current Manager session and verify the configured local folder.
 
-For searchable offline documentation, download and open `SophosSecurityAssistant-Help-v1.3.95.chm` from the Release assets.
+For searchable offline documentation, download and open `SophosSecurityAssistant-Help-v1.3.96.chm` from the Release assets.
 

@@ -12,13 +12,13 @@ Source: [github.com/eslamifar/SophosSecurityAssistant](https://github.com/eslami
 
 Manager requires Windows Administrator approval at startup. If elevation is unavailable or the UAC request is cancelled, Manager closes without opening. The independent Widget does not require elevation merely to display status.
 
-Current release: **1.3.95**
+Current release: **1.3.96**
 
 > **Sleep more peacefully at night with Sophos Security Assistant.**
 
 Supported firewall baseline: **Sophos Firewall 17.5 or later**
 
-> **Version 1.3.95 improves automatic Rule failure visibility and collector recovery while retaining the performance, privacy, update, and service contracts from 1.3.94.** Setup configures verified Windows service recovery in addition to automatic startup and UDP 514 access. The Widget distinguishes a running collector from a stale, paused, unconfigured, or failing Rule engine and displays a Windows notification when attention is required.
+> **Version 1.3.96 adds automatic Rule recovery and sustained firewall resource alerts while retaining the privacy, update, and service-recovery contracts from 1.3.95.** Paused automation periodically tests the Sophos connection with bounded backoff, resumes after recovery, and requests catch-up evaluation. Manager notifies only after consecutive high CPU, memory, or disk samples, reducing alerts from short spikes.
 
 ## 🧭 Main workspaces
 
@@ -27,7 +27,7 @@ Supported firewall baseline: **Sophos Firewall 17.5 or later**
 - Configure the firewall host/IP, HTTPS port, username, password, group capacity, SSL verification, and inactivity timeout. The import target group is selected from the connected firewall's group list in Hosts > IPs.
 - Open the entered Sophos Web Admin address directly, before or after saving settings.
 - Verify the XML API connection and display hostname, model, negotiated API version, compatibility profile, and connected duration.
-- After connecting, open **Home > Information** to review firewall identity plus the latest CPU, memory, disk, and per-interface performance received from Sophos System Health Syslog. Performance refreshes every minute and clearly reports missing or stale data.
+- After connecting, open **Home > Information** to review firewall identity plus the latest CPU, memory, disk, and per-interface performance received from Sophos System Health Syslog. Performance refreshes every minute, reports missing or stale data, and raises a Windows notification only after two consecutive high or critical CPU, memory, or disk samples.
 - Keep the Home connection-settings group locked while connected; disconnect before changing the active host, credentials, capacity, timeout, or certificate setting.
 - Automatically disconnect after a configurable inactivity period.
 - Show sequential initial-load progress for Hosts, MAC/FQDN, Network, Threats, and Manage.
@@ -99,7 +99,7 @@ Supported firewall baseline: **Sophos Firewall 17.5 or later**
 - Follow per-IP group-addition progress and cancel remaining operations after the current request finishes.
 - Use the first Target group entry as an explicit selection prompt; adding selected IPs is blocked until a real Sophos group is selected.
 - Review current timed Rule memberships, upcoming expirations, overdue entries, and recent expiration outcomes in **Expirations**, which reloads shared Rule state every 60 seconds while visible.
-- In **Rules**, a green row means the enabled automatic Rule is genuinely managed by a running, configured, unpaused and recently reporting Windows service; the Automation checkbox alone does not make a row green. Add, Edit and Delete reload the persisted shared list after success. Each failure can trigger the separately configured Rule-failure email, and three consecutive failures pause automation.
+- In **Rules**, a green row means the enabled automatic Rule is genuinely managed by a running, configured, unpaused and recently reporting Windows service; the Automation checkbox alone does not make a row green. Add, Edit, Delete, Enable and Disable reload the persisted shared list after success. Each failure can trigger the separately configured Rule-failure email. Three consecutive failures pause automation; the service then retries the Sophos connection with bounded backoff and automatically resumes and requests catch-up evaluation after recovery.
 - Double-click an IP in a threat or membership table to view its complete stored attack history and Rule-automation activity.
 - Review All, Critical, Major, and Moderate threats over an exact From/To date-time range. **Previous day** and **Next day**, placed before From, select a complete adjacent day; Next day is disabled on today. Live resets From to today at 00:00:00 and advances To to the current time on every 5-second auto refresh, including across midnight; changing either timestamp manually preserves a fixed historical range.
 - Chart daily Critical, Major, Moderate, and other threat-event trends over an exact From/To date-time range in **Trends**. Previous day and Next day select a complete adjacent day and Next day is disabled on today. Live mode advances To to the current time every 30 seconds, while disabling it preserves a fixed historical range; click a day to display its exact severity totals and every attacking IP, then double-click an IP for its full history.
@@ -252,7 +252,7 @@ Requirements: Visual Studio 2026 with the .NET desktop development workload (or 
 
 ```powershell
 $env:SSA_SIGNING_CERTIFICATE_THUMBPRINT = 'CERTIFICATE_THUMBPRINT_WITHOUT_SPACES'
-build\Build-Installer.cmd -Version 1.3.95
+build\Build-Installer.cmd -Version 1.3.96
 ```
 
 The self-contained installer and versioned standalone CHM Help are written to `artifacts\setup`. With a configured code-signing certificate, the release builder signs first-party binaries and Setup with SHA-256 and timestamps them. When the project owner deliberately uses `-AllowUnsigned`, Windows may display an Unknown publisher/SmartScreen warning and that limitation must be disclosed in the GitHub Release notes. Publish Setup and Help as GitHub Release assets. See [CHANGELOG.md](CHANGELOG.md) for version history and [build/README.md](build/README.md) for certificate-store and signing details.

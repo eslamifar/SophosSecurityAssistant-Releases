@@ -1,5 +1,36 @@
 # Changelog
 
+## 1.3.96 - 2026-11-22
+
+### Added
+
+- Add automatic recovery for paused Rules: the service tests the Sophos connection after bounded 1, 2, 5, 10, and 30-minute delays, resumes automation after success, and requests catch-up evaluation of stored threats.
+- Show the next automatic Rule recovery attempt in the Widget.
+- Add Windows notifications after two consecutive high or critical CPU, memory, or disk samples; healthy or stale data resets the alert state.
+
+### Changed
+
+- Keep the independent Rule heartbeat, Windows-service recovery, failure email, and Widget health contracts introduced in 1.3.95 while allowing transient Sophos outages to recover without manual intervention.
+- Refresh About links and add the project Telegram contact.
+
+### Fixed
+
+- Avoid permanent Rule automation pauses after a temporary Sophos connection failure.
+- Avoid performance notifications for one short resource spike or repeated processing of the same System Health sample.
+
+### Security
+
+- Retain the privacy contract: diagnostic reporting remains only in **Manage > Config**, transport credentials remain hidden, and consent, sanitization, and temporary-file cleanup remain enforced.
+
+### Documentation
+
+- Document automatic Rule recovery, Widget retry status, sustained performance alerts, and the continued experimental status of **Network > Rules**.
+
+### Known limitations
+
+- **Network > Rules** remains experimental across SFOS versions; verify detected rule types and values before applying changes.
+- Performance alerts require current System Health Syslog data and two consecutive samples at or above the warning threshold.
+
 ## 1.3.95 - 2026-11-21
 
 ### Added

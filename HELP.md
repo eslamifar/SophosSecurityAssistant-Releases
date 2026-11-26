@@ -4,11 +4,19 @@
   <img src="https://github.com/eslamifar/SophosSecurityAssistant-Releases/releases/latest/download/SecurityAssistantIcon.png" width="96" alt="Sophos Security Assistant icon">
 </p>
 
-Version **1.3.96** · Sophos Firewall 17.5 or later · Windows x64
+Version **1.3.97** · Sophos Firewall 17.5 or later · Windows x64
 
 > **Sleep more peacefully at night with Sophos Security Assistant.**
 
-This browser-readable guide is provided with every release so users can review the application before installing it. The GitHub Release also includes the complete searchable Microsoft Compiled HTML Help file, `SophosSecurityAssistant-Help-v1.3.96.chm`.
+This browser-readable guide is provided with every release so users can review the application before installing it. The GitHub Release also includes the complete searchable Microsoft Compiled HTML Help file, `SophosSecurityAssistant-Help-v1.3.97.chm`.
+
+## 🛠️ Recovery watchdog in 1.3.97
+
+The independent **Sophos Security Assistant Repair Watchdog** checks the Threat Collector and its heartbeat every minute. It restarts a stopped or stale collector and records recovery activity in the Windows Application event log, the Widget, and enabled service-alert email.
+
+If application files are missing, the watchdog can use the last successful Setup cached in protected ProgramData storage. Before unattended repair it verifies the cached SHA-256, requires a valid Authenticode signature, and requires the Setup signer to match the watchdog signer. Repair attempts are limited to one per hour and three per 24 hours.
+
+> **Unsigned-build limitation:** monitoring and service restart still work, but unattended offline reinstallation is intentionally rejected when Setup has no trusted code-signing signature. Windows may also display an Unknown publisher or SmartScreen warning.
 
 ## 🧭 Contents
 
@@ -172,5 +180,5 @@ Use **About > Reinstall** to download and SHA-256 verify the latest installer ag
 - **Saved secrets unavailable:** sign in with the Windows account that saved them or enter and save them again.
 - **FTP copy fails:** provide the FTP password during the current Manager session and verify the configured local folder.
 
-For searchable offline documentation, download and open `SophosSecurityAssistant-Help-v1.3.96.chm` from the Release assets.
+For searchable offline documentation, download and open `SophosSecurityAssistant-Help-v1.3.97.chm` from the Release assets.
 

@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.3.97 - 2026-11-26
+
+- Added an independent Windows Repair Watchdog that checks the Threat Collector every minute, restarts stopped or stale services, and survives collector executable loss.
+- Added verified offline self-repair using the last successfully installed Setup cached under protected ProgramData storage.
+- Silent repair validates both SHA-256 and Authenticode signer identity before executing Setup, then verifies collector health after installation.
+- Added repair-loop protection: no more than one attempt per hour or three attempts per 24 hours.
+- Added repair status logging, Windows Event Log entries, Service Alerts email, and one-time Widget notifications.
+- Fixed missing heartbeat data being treated as healthy; a running collector with no heartbeat is now restarted and rechecked.
+- Improved uninstall verification so both Windows services must reach the Stopped state before removal.
+- Added post-uninstall retry cleanup for transiently locked Watchdog and repair-cache files.
+- Security: offline reinstallation requires a matching SHA-256, valid Authenticode signature, and the same signer as the watchdog. Unsigned releases retain monitoring/restart but cannot perform unattended offline reinstallation.
+
 ## 1.3.96 - 2026-11-22
 
 ### Added

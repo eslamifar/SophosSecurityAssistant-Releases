@@ -12,13 +12,16 @@ Source: [github.com/eslamifar/SophosSecurityAssistant](https://github.com/eslami
 
 Manager requires Windows Administrator approval at startup. If elevation is unavailable or the UAC request is cancelled, Manager closes without opening. The independent Widget does not require elevation merely to display status.
 
-Current release: **1.3.96**
+Current release: **1.3.97**
 
 > **Sleep more peacefully at night with Sophos Security Assistant.**
 
 Supported firewall baseline: **Sophos Firewall 17.5 or later**
 
-> **Version 1.3.96 adds automatic Rule recovery and sustained firewall resource alerts while retaining the privacy, update, and service-recovery contracts from 1.3.95.** Paused automation periodically tests the Sophos connection with bounded backoff, resumes after recovery, and requests catch-up evaluation. Manager notifies only after consecutive high CPU, memory, or disk samples, reducing alerts from short spikes.
+> **Version 1.3.97 adds guarded offline recovery while retaining the automatic Rule recovery and firewall resource alerts from 1.3.96.** A separate Windows watchdog checks the collector heartbeat every minute, restarts a stopped or stale collector, and can restore missing or damaged files from the last successfully installed Setup without requiring internet access. Offline reinstallation is deliberately allowed only when Setup has a valid Authenticode signature, its SHA-256 matches the protected cache, and its signer matches the watchdog executable.
+
+> [!IMPORTANT]
+> If the public Setup is distributed without a trusted code-signing certificate, Windows may show SmartScreen/Unknown publisher. Service monitoring and restart remain available, but the watchdog will refuse unattended offline reinstallation because its signer-safety requirement cannot be satisfied.
 
 ## 🧭 Main workspaces
 
@@ -252,7 +255,7 @@ Requirements: Visual Studio 2026 with the .NET desktop development workload (or 
 
 ```powershell
 $env:SSA_SIGNING_CERTIFICATE_THUMBPRINT = 'CERTIFICATE_THUMBPRINT_WITHOUT_SPACES'
-build\Build-Installer.cmd -Version 1.3.96
+build\Build-Installer.cmd -Version 1.3.97
 ```
 
 The self-contained installer and versioned standalone CHM Help are written to `artifacts\setup`. With a configured code-signing certificate, the release builder signs first-party binaries and Setup with SHA-256 and timestamps them. When the project owner deliberately uses `-AllowUnsigned`, Windows may display an Unknown publisher/SmartScreen warning and that limitation must be disclosed in the GitHub Release notes. Publish Setup and Help as GitHub Release assets. See [CHANGELOG.md](CHANGELOG.md) for version history and [build/README.md](build/README.md) for certificate-store and signing details.
